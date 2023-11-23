@@ -7,7 +7,7 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "John-John's Homepage"
+title                    : "Home"
 title_separator          : "-"
 name                     : &name "John-John Carlsson"
 description              : &description "personal description"
