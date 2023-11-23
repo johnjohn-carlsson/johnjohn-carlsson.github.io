@@ -1,7 +1,8 @@
 ---
-title: "Portfolio item number 1"
-excerpt: "Short description of portfolio item number 1<br/><img src='/images/500x300.png'>"
+title: "Krockes Quest: Meat your Destiny"
+excerpt: "Endless runner game created with Pygame.<br/><img src='/images/Coverpic.png'>"
 collection: portfolio
 ---
 
-This is an item in your portfolio. It can be have images or nice text. If you name the file .md, it will be parsed as markdown. If you name the file .html, it will be parsed as HTML. 
+This game was created with Pygame, converted to HTML code with the module AsyncIO and finally uploaded to itch.io.
+Until I figure out how to play directly on this page, you can press [this link](https://joppedoppe.itch.io/krockes-quest-v1) to go to the itch.io game location and play the game.
