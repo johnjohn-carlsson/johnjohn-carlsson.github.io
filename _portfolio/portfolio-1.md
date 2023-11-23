@@ -1,6 +1,6 @@
 ---
 title: "Krockes Quest: Meat your Destiny"
-excerpt: "Endless runner game created with Pygame.<br/><img src='/images/Coverpic.png'>"
+excerpt: "Endless runner game created with Pygame.<br/><img src='/images/portfolio_cover_krocke.png'>"
 collection: portfolio
 ---
 
