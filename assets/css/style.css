@@ -1,0 +1,40 @@
+.form-section form {
+    text-align: center;
+}
+
+.person-inputs {
+    margin-bottom: 20px;
+}
+
+.person-inputs input {
+    margin: 5px;
+    padding: 10px; /* Adjust the padding as needed */
+    width: 200px; /* Adjust width as needed */
+    box-sizing: border-box; /* This ensures padding does not affect the total width */
+}
+
+.person-name {
+    width: 150px; /* Adjust if you want the name field to be smaller */
+}
+
+.money-input,
+.salary-input {
+    width: 120px; /* Adjust based on your preference */
+}
+
+.submit-btn {
+    margin-top: 20px;
+    padding: 10px 50px;
+    cursor: pointer;
+    background-color: orange;
+    color: black;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: black;
+}
+
+.centered-piece {
+    text-align: center;
+}
