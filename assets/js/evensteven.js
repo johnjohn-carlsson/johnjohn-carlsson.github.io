@@ -17,8 +17,16 @@ document.getElementById('evenStevenForm').addEventListener('submit', function(e)
     // Convert your Python function here
     const results = evenSteven(participants);  // Implement this function in JS
 
-    // Display results
-    document.getElementById('resultsText').textContent = JSON.stringify(results, null, 2); // Format JSON for readability
+    // Format and display results
+    let resultsText = '';
+    results.forEach(result => {
+        if (result.name && !isNaN(result.amount)) { // Check if name exists and amount is a number
+            resultsText += `${result.name} should pay ${result.amount}.\n`; // Append this person's result to the results text
+        }
+    });
+
+    // Display formatted results
+    document.getElementById('resultsText').textContent = resultsText.trim(); // Remove any trailing newline
 });
 
 function evenSteven(participants) {
