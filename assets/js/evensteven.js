@@ -7,10 +7,10 @@ document.getElementById('evenStevenForm').addEventListener('submit', function(e)
     const participants = [];
     for (let i = 1; i <= 4; i++) {  // Assuming 4 participants max as per your form
         participants.push({
-            name: formData.get(`person-${i}`),
-            has_paid: formData.get(`has-paid-${i}`),
-            to_pay: formData.get(`to-pay-${i}`),
-            salary: formData.get(`salary-${i}`)
+            name: formData.get(`person-${i}`) || '', // Default to empty string if undefined
+            has_paid: formData.get(`has-paid-${i}`) || '0', // Default to '0' if undefined
+            to_pay: formData.get(`to-pay-${i}`) || '0', // Default to '0' if undefined
+            salary: formData.get(`salary-${i}`) || '0'  // Default to '0' if undefined
         });
     }
 
@@ -18,7 +18,7 @@ document.getElementById('evenStevenForm').addEventListener('submit', function(e)
     const results = evenSteven(participants);  // Implement this function in JS
 
     // Display results
-    document.getElementById('resultsText').textContent = JSON.stringify(results);
+    document.getElementById('resultsText').textContent = JSON.stringify(results, null, 2); // Format JSON for readability
 });
 
 function evenSteven(participants) {
@@ -26,23 +26,35 @@ function evenSteven(participants) {
     const dictionary_of_participants = {};
 
     participants.forEach(participant => {
+        // Parse numeric fields safely
         const { name, has_paid, to_pay, salary } = participant;
-        has_paid_total += parseInt(has_paid);
-        to_pay_total += parseInt(to_pay);
-        paychecks_total += parseInt(salary);
+        const parsedHasPaid = parseInt(has_paid) || 0;
+        const parsedToPay = parseInt(to_pay) || 0;
+        const parsedSalary = parseInt(salary) || 0;
 
-        dictionary_of_participants[name] = [parseInt(has_paid), parseInt(to_pay), parseInt(salary)];
+        // Update totals
+        has_paid_total += parsedHasPaid;
+        to_pay_total += parsedToPay;
+        paychecks_total += parsedSalary;
+
+        // Store parsed numbers to avoid re-parsing
+        dictionary_of_participants[name] = [parsedHasPaid, parsedToPay, parsedSalary];
     });
 
+    // Calculate total expenses and individual shares
     const total_expenses = has_paid_total + to_pay_total;
     const results = [];
 
     for (const [name, values] of Object.entries(dictionary_of_participants)) {
-        const paycheck_fraction = values[2] / paychecks_total;
+        // Prevent division by zero
+        const paycheck_fraction = paychecks_total > 0 ? values[2] / paychecks_total : 0;
         const fair_share = total_expenses * paycheck_fraction;
         const difference = fair_share - values[0];  // fair_share - has_paid
 
-        results.push({ name, amount: difference.toFixed(2) });  // Keeping two decimal places for currency
+        // Only add result if name is not empty
+        if (name) {
+            results.push({ name, amount: difference.toFixed(2) });  // Format amount as fixed decimal
+        }
     }
 
     return results;
