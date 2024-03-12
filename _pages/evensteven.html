@@ -26,7 +26,7 @@ author_profile: true
     <main>
         <section id="main-section">
                 <section class="form-section">
-                    <form action="/" method="POST" autocomplete="off">
+                    <form id="evenStevenForm" autocomplete="off">
                         <div class="person-inputs">
                             <input type="text" name="person-1" class="person-name" placeholder="Namn:">
                             <input type="text" name="has-paid-1" class="money-input" placeholder="Har betalat:">
@@ -56,9 +56,12 @@ author_profile: true
                     </form>
                 </section>
             <section class="centered-piece">
-                        <p style="color: orange;"><strong>Results go here</strong></p>
+                    <p style="color: orange;"><strong id="resultsText">Results go here</strong></p>
                     <a style="color: orange; padding: 20px;" href="https://johnjohn-carlsson.github.io/evensteven/">
                         <button type="button" class="submit-btn"><strong>Återställ</strong></button>
+                    </a>
+                    <a style="color: orange; padding: 20px;" href="https://johnjohn-carlsson.github.io/">
+                        <button type="button" class="submit-btn"><strong>Hem</strong></button>
                     </a>
                 
             </section>
@@ -68,6 +71,6 @@ author_profile: true
     <footer>
 
     </footer>
-
+    <script src="/assets/js/evensteven.js"></script>
 </body>
 </html>
