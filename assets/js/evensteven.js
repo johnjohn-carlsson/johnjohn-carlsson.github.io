@@ -32,34 +32,40 @@ document.getElementById('evenStevenForm').addEventListener('submit', function(e)
 });
 
 function evenSteven(participants) {
-    let total_to_pay = 0;
-    let total_income = 0;
+    let total_unpaid = 0; // Total of 'to-pay' amounts.
+    let total_income = 0; // Total income of all participants.
 
+    // First, calculate the total unpaid bills and total income.
     participants.forEach(participant => {
         // Parse numeric fields safely
         participant.has_paid = parseInt(participant.has_paid) || 0;
         participant.to_pay = parseInt(participant.to_pay) || 0;
         participant.salary = parseInt(participant.salary) || 0;
 
-        // Update totals
-        total_to_pay += participant.to_pay;
-        total_income += participant.salary;
+        total_unpaid += participant.to_pay; // Add up all the to-pay amounts.
+        total_income += participant.salary; // Add up all the salaries.
     });
 
-    // Calculate the amounts each participant should pay
+    // Total already paid by everyone, this will adjust the fairness
+    let total_already_paid = participants.reduce((acc, participant) => acc + participant.has_paid, 0);
+
+    // Determine the adjusted total that needs to be distributed based on previous payments.
+    let adjusted_total_to_pay = total_unpaid + total_already_paid; 
+
+    // Calculate the amounts each participant should pay, adjusted for their income and previous payments.
     const results = participants.map(participant => {
-        // Calculate what fraction of the total income each participant's income represents
-        const income_fraction = total_income > 0 ? participant.salary / total_income : 0;
+        // Calculate the share of the total income.
+        const income_fraction = (participant.salary / total_income) || 0;
 
-        // Calculate each participant's share of the total unpaid bills
-        const share_of_bills = total_to_pay * income_fraction;
+        // Calculate each person's fair share of the total adjusted expenses.
+        const fair_share = adjusted_total_to_pay * income_fraction;
 
-        // Calculate the difference between what they should have paid and what they have paid
-        const difference = share_of_bills - participant.has_paid;
+        // The difference now reflects how much more they need to pay, considering what they've already paid.
+        const difference = fair_share - participant.has_paid;
 
         return {
             name: participant.name,
-            amount: difference.toFixed(2)
+            amount: difference.toFixed(2)  // This represents how much more they need to contribute or have overpaid.
         };
     });
 
