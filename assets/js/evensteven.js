@@ -18,15 +18,17 @@ document.getElementById('evenStevenForm').addEventListener('submit', function(e)
     const results = evenSteven(participants);  // Implement this function in JS
 
     // Format and display results
-    let resultsText = '';
+    const resultsContainer = document.getElementById('resultsText');
+    resultsContainer.innerHTML = ''; // Clear previous results
+
     results.forEach(result => {
-        if (result.name && !isNaN(result.amount)) { // Check if name exists and amount is a number
-            resultsText += `${result.name} should pay ${result.amount}.\n`; // Append this person's result to the results text
+        if (result.name) {
+            const newLine = document.createElement('p'); // Or 'p' for paragraph elements
+            newLine.textContent = `${result.name} should pay ${result.amount}.`;
+            resultsContainer.appendChild(newLine);
         }
     });
 
-    // Display formatted results
-    document.getElementById('resultsText').textContent = resultsText.trim(); // Remove any trailing newline
 });
 
 function evenSteven(participants) {
