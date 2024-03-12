@@ -24,7 +24,7 @@ document.getElementById('evenStevenForm').addEventListener('submit', function(e)
     results.forEach(result => {
         if (result.name) {
             const newLine = document.createElement('p'); // Or 'p' for paragraph elements
-            newLine.textContent = `${result.name} should pay ${result.amount}.`;
+            newLine.textContent = `${result.name} ska betala ${result.amount}.`;
             resultsContainer.appendChild(newLine);
         }
     });
@@ -32,40 +32,36 @@ document.getElementById('evenStevenForm').addEventListener('submit', function(e)
 });
 
 function evenSteven(participants) {
-    let has_paid_total = 0, to_pay_total = 0, paychecks_total = 0;
-    const dictionary_of_participants = {};
+    let total_to_pay = 0;
+    let total_income = 0;
 
     participants.forEach(participant => {
         // Parse numeric fields safely
-        const { name, has_paid, to_pay, salary } = participant;
-        const parsedHasPaid = parseInt(has_paid) || 0;
-        const parsedToPay = parseInt(to_pay) || 0;
-        const parsedSalary = parseInt(salary) || 0;
+        participant.has_paid = parseInt(participant.has_paid) || 0;
+        participant.to_pay = parseInt(participant.to_pay) || 0;
+        participant.salary = parseInt(participant.salary) || 0;
 
         // Update totals
-        has_paid_total += parsedHasPaid;
-        to_pay_total += parsedToPay;
-        paychecks_total += parsedSalary;
-
-        // Store parsed numbers to avoid re-parsing
-        dictionary_of_participants[name] = [parsedHasPaid, parsedToPay, parsedSalary];
+        total_to_pay += participant.to_pay;
+        total_income += participant.salary;
     });
 
-    // Calculate total expenses and individual shares
-    const total_expenses = has_paid_total + to_pay_total;
-    const results = [];
+    // Calculate the amounts each participant should pay
+    const results = participants.map(participant => {
+        // Calculate what fraction of the total income each participant's income represents
+        const income_fraction = total_income > 0 ? participant.salary / total_income : 0;
 
-    for (const [name, values] of Object.entries(dictionary_of_participants)) {
-        // Prevent division by zero
-        const paycheck_fraction = paychecks_total > 0 ? values[2] / paychecks_total : 0;
-        const fair_share = total_expenses * paycheck_fraction;
-        const difference = fair_share - values[0];  // fair_share - has_paid
+        // Calculate each participant's share of the total unpaid bills
+        const share_of_bills = total_to_pay * income_fraction;
 
-        // Only add result if name is not empty
-        if (name) {
-            results.push({ name, amount: difference.toFixed(2) });  // Format amount as fixed decimal
-        }
-    }
+        // Calculate the difference between what they should have paid and what they have paid
+        const difference = share_of_bills - participant.has_paid;
+
+        return {
+            name: participant.name,
+            amount: difference.toFixed(2)
+        };
+    });
 
     return results;
 }
