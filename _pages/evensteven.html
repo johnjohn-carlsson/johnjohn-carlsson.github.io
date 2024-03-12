@@ -44,7 +44,7 @@ author_profile: true
     <section class="centered-piece">
         {% if results %}
             {% for result in results %}
-                <p style="color: orange;"><strong>{{ result.name }} {% if result.amount > 0 %} ska betala {{ result.amount|int }} kr. {% elif result.amount < 0 %} ska få tillbaka {{ -result.amount|int }} kr. {% else %} har betalat exakt sin andel. {% endif %}</strong></p>
+                <p style="color: orange;"><strong>{{ result.name }} {% if result.amount > 0 %} ska betala {{ result.amount|int }} kr. {% else if result.amount < 0 %} ska få tillbaka {{ -result.amount|int }} kr. {% else %} har betalat exakt sin andel. {% endif %}</strong></p>
             {% endfor %}
             <a style="color: orange; padding: 20px;" href="{{ url_for('index') }}">
                 <button type="button" class="submit-btn"><strong>Återställ</strong></button>
