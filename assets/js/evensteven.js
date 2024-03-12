@@ -32,35 +32,30 @@ document.getElementById('evenStevenForm').addEventListener('submit', function(e)
 });
 
 function evenSteven(participants) {
-    let has_paid_total = 0;
-    let to_pay_total = 0;
-    let paychecks_total = 0;
+    let total_paid_and_due = 0;
+    let results = [];
 
-    // First, accumulate totals from participants
+    // Calculate the total of all 'has_paid' and 'to_pay' amounts
     participants.forEach(participant => {
         participant.has_paid = parseInt(participant.has_paid) || 0;
         participant.to_pay = parseInt(participant.to_pay) || 0;
         participant.salary = parseInt(participant.salary) || 0;
 
-        has_paid_total += participant.has_paid;
-        to_pay_total += participant.to_pay;
-        paychecks_total += participant.salary;
+        total_paid_and_due += participant.has_paid + participant.to_pay;
     });
 
-    // Total expenses combine what's already been paid and what remains to be paid
-    const total_expenses = has_paid_total + to_pay_total;
-    const results = [];
+    // Calculate total salary to determine income fractions
+    let total_salary = participants.reduce((sum, participant) => sum + participant.salary, 0);
 
-    // Calculate each participant's fair share based on their income ratio and already paid
+    // Calculate and update what each participant should contribute
     participants.forEach(participant => {
-        const income_fraction = participant.salary / paychecks_total;
-        const fair_share = total_expenses * income_fraction;
-        const difference = fair_share - participant.has_paid;
+        const income_fraction = participant.salary / total_salary;
+        const personal_share = total_paid_and_due * income_fraction;  // Their fair share based on their income
+        const amount_to_pay = personal_share - participant.has_paid;  // Deduct what they've already contributed
 
-        // Add the calculated result for this participant
         results.push({
             name: participant.name,
-            amount: difference.toFixed(2)
+            amount: amount_to_pay.toFixed(2)  // How much more they need to contribute
         });
     });
 
