@@ -9,7 +9,6 @@ author_profile: true
 
 
 <section id="main-section">
-    <!-- {% if not results %} -->
         <section class="form-section">
             <form action="/" method="POST" autocomplete="off">
                 <div class="person-inputs">
@@ -40,17 +39,11 @@ author_profile: true
                 <button type="submit" id="submit-button" name="submit-button" class="submit-btn"><strong>Beräkna</strong></button>
             </form>
         </section>
-    <!-- {% endif %} -->
     <section class="centered-piece">
-        <!-- {% if results %} -->
-            <!-- {% for result in results %} -->
-                <p style="color: orange;"><strong><!-- {{ result.name }} {% if result.amount > 0 %} ska betala {{ result.amount|int }} kr. {% else if result.amount < 0 %} ska få tillbaka {{ -result.amount|int }} kr. {% else %} har betalat exakt sin andel. {% endif %}--></0></strong></p>
-            <!-- {% endfor %} -->
-            <a style="color: orange; padding: 20px;" href="{{ url_for('index') }}">
+                <p style="color: orange;"><strong>Results go here</strong></p>
+            <a style="color: orange; padding: 20px;" href="https://johnjohn-carlsson.github.io/evensteven/">
                 <button type="button" class="submit-btn"><strong>Återställ</strong></button>
             </a>
-        <!-- {% endif %} -->
-        
     </section>
 </section>
  
