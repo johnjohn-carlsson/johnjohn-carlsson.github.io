@@ -1,6 +1,6 @@
 ---
 title: "evenSteven()"
-excerpt: "The dynamic debt calculator!<br/><img src='/images/evensteven_1.png' style='width: 600px;'>"
+excerpt: "The dynamic debt calculator!<br/><img src='/images/evensteven_1.png' style='width: 500px; height: 300px;'>"
 collection: portfolio
 ---
 
