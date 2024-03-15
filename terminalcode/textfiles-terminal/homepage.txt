@@ -1,6 +1,5 @@
 <br><br><br><br>
-Welcome! <br> 
-<br> 
+<h2>Welcome!</h2>
 <br>
 This is my personal webpage. <br>
 If you are not familiar with VS Code, use the 'Enter command...' box <br>
@@ -11,4 +10,5 @@ To view all available pages, type '<span style="color: #dd6e35">/pages</span>'.<
 For more help, type '<span style="color: #dd6e35">/help</span>'. <br>
 <br>
 <br>
+<i>Credit goes out to Mehow for the inspiration</i><br>
 John-John
