@@ -177,7 +177,7 @@ author_profile: true
                     const fileContent = await loadTextFile(commands[commandKey]);
                     pageContentWindow.innerHTML = fileContent; // Assuming it's safe HTML
                 } else {
-                    pageContentWindow.textContent = 'Command not recognized. Try "help" for a list of commands.';
+                    pageContentWindow.textContent = 'Command not recognized. Try "/help" for a list of commands.';
                 }
             }
 
