@@ -13,5 +13,6 @@ For more help, type '<span style="color: #dd6e35">/help</span>'. <br>
 <i>Credit goes out to Mehow for the inspiration.</i><br>
 John-John
 <br><br>
-<h2>News</h2>---------------------------------------------------------------
+---------------------------------------------------------------
+<h2>News</h2>
 New code alert! Check out the '<span style="color: #dd6e35">/portfolio</span>' page for my latest creation; evenSteven()
