@@ -15,4 +15,4 @@ Javascript checks the input command when sent, if it recognizes the input text a
 in a list of commands, it loads the corresponding .txt file into the output field.
 So yeah, that means I did write some HTML code in .txt files, it wasn't great.. good practice though!
 
-You can try out the terminal version of this webpage [here](https://johnjohn-carlsson.github.io/terminal/).
+You can try out the terminal version of this webpage <a href="https://johnjohn-carlsson.github.io/terminal/" target="_blank">here</a>.
