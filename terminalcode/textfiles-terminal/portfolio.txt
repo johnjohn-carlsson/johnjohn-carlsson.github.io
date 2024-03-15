@@ -14,7 +14,7 @@
 </div>
 <br><br><br>
 <div class="contact-page-container">
-    <img src="/images/evensteven_1.png" alt="" style="width: 400px; height: auto;">
+    <img src="/images/evensteven_1.png" alt="" style="width: 500px; height: auto;">
     <div class="about-me-section">
         <br><br>
         Project: "evenSteven() - The dynamic debt calculator!"
