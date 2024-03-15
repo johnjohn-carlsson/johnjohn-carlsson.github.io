@@ -1,0 +1,119 @@
+<br><br><br>
+-------------------------------------------------------------------------------------------------------------------------------------------- <br>
+<div class="blogpost-class">
+    <div class="blogpost-content">
+        <h2>01/03 2024 - evenSteven()</h2>
+        <h3>Actually useful code?!</h3>
+        <p>No, it’t not 1992 even though my program may look like it. I present to you, my way of solving mine and my fiance’s <br>
+        bill payments for each month; evenSteven().</p>
+
+        <p>evenSteven() accepts an indefinite amount of *args, however for the sake of the webpage I have limited the program to <br>
+        up to four persons for payment calculations. It then calculates the appropriate amount for each person to pay with regards to <br>
+        income and how much they have already paid, making things even Steven!</p>
+
+        <p>Javascript has been the bane of my web class, and one I get somewhat used to it I may add some sort of responsive <br>
+        persons selector instead of the four empty fiends like this, but for now this 90’s style static page will do just fine.</p>
+
+        <p>As the saying goes; if it works and it’s stupid, it ain’t stupid.</p>
+        
+        <p>You can try evenSteven() <a href="https://john-john.nu/evensteven/" target="_blank">here</a>!</p>
+        <img src="terminalcode/static-terminal/images/evensteven_1.png" alt="" style="width: 700px; height: auto;">
+    </div>
+</div>
+-------------------------------------------------------------------------------------------------------------------------------------------- <br>
+<div class="blogpost-class">
+    <div class="blogpost-content">
+        <h2>23/1 2024 - Codelanguages-galore</h2>
+        <h3>Wow.</h3>
+        <p>Ok, so building websites was a bit more complicated then I previously thought. Not only is it complex, but there are <br>
+        so far three different languages to learn! Thankfully my ever so hardworking colleague ChatGPT is helping me stumble forward. <br>
+        Seriously, I can’t imagine doing this five years ago and not having the ability to stream information through a LLM. </p>
+
+        <p>I am looking forward to digging deeper into CSS, I just love everything about designing and creating and I think CSS <br>
+        will be the part that offers the most creative space. So far I’ve managed to change the font of my page, <br>
+        can’t wait to look back and laugh at the simplicity! </p>
+
+        <p>I am also looking forward to figuring out a simple and reliable way of getting my experimental pages on the web for others to try. <br>
+        The 127.0.0.1 address is becoming real booring real fast. </p>
+
+        <p>Anyway, below is an image of a simple experiment I’ve been tinkering with. When you press the button it generates <br>
+        three different Tarot cards. I have checks to make sure they are always different and that the texts match the images of course. </p>
+
+        <p>Til' next time. <br>
+        John-John</p>
+        <img src="terminalcode/static-terminal/images/tarot_reader.png" alt="" style="width: 700px; height: auto;">
+    </div>
+</div>
+-------------------------------------------------------------------------------------------------------------------------------------------- <br>
+<div class="blogpost-class">
+    <div class="blogpost-content">
+        <h2>08/01 2024 - The Year of the Codemonkey</h2>
+        <h3>Greetings.</h3>
+        <p>I feel I can finally move and think again after the fog of food and drink that we call the christmas holidays.<br>
+        Web-framework class has started and it has me feeling so-so about this website, maybe as I gain more HTML, <br>
+        CSS & Javascript knowledge I will come to change more on here, we’ll see.</p>
+
+        <p>Last years classes were a success! I feel like I learned a ton and I had the top grades of every <br>
+        test/paper/whatever to prove it. It really is true what they say about how much more easy it is to learn <br>
+        when you’re doing something you really enjoy.</p>
+
+        <p>This year we will be learning more advanced methods and classes, and if what one of out teacher said is true,<br> 
+        that “this is when you will start to actually become useful as a programmer” then I predict this year <br>
+        to be the year of the codemonkey!</p>
+
+        <p>To a productive and creative new year!<br>
+        John-John</p>
+    </div>
+</div>
+-------------------------------------------------------------------------------------------------------------------------------------------- <br>
+<div class="blogpost-class">
+    <div class="blogpost-content">
+        <h2>15/12 2023 - Winter Holidays</h2>
+        <h3>Happy holidays!</h3>
+        <p>Today I wrote my final test for the final class of the year, "Database technology". While I am yet to be <br>
+        graded I felt happy with my performance, and most importantly I am very happy with that we've <br>
+        learned. I feel like I have a solid foundation of knowledge when it comes to the basics of databases.</p>
+        <p>I'm working on a few Pygame game ideas, nothing super serious, mostly creative experiments for my <br>
+        own fun, we'll see if and when they appear on the website.</p>
+        <p>"Web framework" class starts January 2nd and I am looking forward to it, but until then I have some <br>
+        quality family time to tend to, can't wait!</p>
+        <p>Happy holidays!<br>
+        John-John</p>
+    </div>
+</div>
+-------------------------------------------------------------------------------------------------------------------------------------------- <br>
+<div class="blogpost-class">
+    <div class="blogpost-content">
+        <h2>06/12 2023 - New GitHub project</h2>
+        <h3>"WeatherSender"</h3>
+        <p>Today I uploaded a new small python project to GitHub, I call it WeatherSender.<br>
+        You can find it <a href="https://github.com/johnjohn-carlsson/WeatherSender" target="_blank">here.</a></p>
+        <p>The original idea was to get an automatic weather forecast every morning to my phone in the form of 
+        a text message, but I quickly realised that I would need some sort of cloud or server setup in order 
+        for this to work.</p>
+        <p>So until I figure that last step out, the project will act as a fully functioning script that sends the 
+        report when ran.</p>
+        <p>... maybe I can convince someone to run the program on their computer with the forecast going to my 
+        phone each morning! Would that still count as an automatic system..?</p>
+        <p>*EDIT Uploaded phone screenshot of the message that the program sends.</p>
+        <p>John-John</p>
+    </div>
+    <div class="blogpost-image">
+        <img src="terminalcode/static-terminal/images/weathersend_example.png" alt="WeatherSender Example" style="width: 300px; height: auto;">
+    </div>
+</div>
+-------------------------------------------------------------------------------------------------------------------------------------------- <br>
+<div class="blogpost-class">
+    <div class="blogpost-content">
+        <h2>23/11 2023 - Website launch day!</h2>
+        <h3>And we are live.</h3>
+        <p>So this is my first blog post on my first website, yay! Github Pages was way more complicated and <br>
+        intricate than I initially thought, and I am looking forward to polishing my website as I learn more.</p>
+        <p>Some initial thoughts of improvement are:</p>
+        <p>&emsp; Make an english version of the CV <br>
+        &emsp; Look into having Krockes Quest play directly on the webpage <br>
+        &emsp; Find an image of myself where I don't sport Soviet night vision goggles</p>
+        <p>Overall I am happy with my progress of one days work.</p>
+        <p>John-John</p>
+    </div>
+</div>

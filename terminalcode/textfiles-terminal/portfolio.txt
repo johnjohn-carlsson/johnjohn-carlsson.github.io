@@ -1,0 +1,28 @@
+<br><br><br>
+<div class="contact-page-container">
+    <img src="static/images/resized_krocke_cover.png" alt="" style="width:400px; height: auto;">
+    <div class="about-me-section">
+        <br><br>
+        Project: "Krockes Quest: Meat your Destiny!"
+        <br><br>
+        Description: "Endless runner game created with Pygame."
+        <br><br>
+        <a href="https://joppedoppe.itch.io/krockes-quest-v1" target="_blank">
+            Play game!
+        </a>
+    </div>
+</div>
+<br><br><br>
+<div class="contact-page-container">
+    <img src="static/images/evensteven.png" alt="" style="width:400px; height: auto;">
+    <div class="about-me-section">
+        <br><br>
+        Project: "evenSteven() - The dynamic debt calculator!"
+        <br><br>
+        Description: "Calculates debt relative to income and previous payments."
+        <br><br>
+        <a href="https://john-john.nu/evensteven/" target="_blank">
+            Try it out!
+        </a>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<br><br><br><br>
+This is a list of all available pages:<br>
+<br>
+'<span style="color: #dd6e35">/home</span>' -      The homepage with welcome information.<br>
+<br>
+'<span style="color: #dd6e35">/blog</span>' -      My personal blog, more often than not I showcase my small coding hobbyprojects.<br>
+<br>
+'<span style="color: #dd6e35">/contact</span>' -   About me and contact information.<br>
+<br>
+'<span style="color: #dd6e35">/cv</span>' -        My resumé for generic purposes.<br>
+<br>
+'<span style="color: #dd6e35">/portfolio</span>' - Showcase of somewhat completed projects.<br>
+<br>
+'<span style="color: #dd6e35">/help</span>' -      Helpful hints and tips for the non-nerd visitors.<br>

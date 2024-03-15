@@ -1,0 +1,2 @@
+<p style="text-align: center;">You can view the .pdf version <a href="static/pdf/cv_johnjohn_2024.pdf" target="_blank">here</a>.</p><br>
+<img src="static/images/cv_johnjohn.jpg" alt="" style="width:700px; height: auto;">

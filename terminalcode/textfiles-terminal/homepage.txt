@@ -1,0 +1,14 @@
+<br><br><br><br>
+Welcome! <br> 
+<br> 
+<br>
+This is my personal webpage. <br>
+If you are not familiar with VS Code, use the 'Enter command...' box <br>
+below to write what page you would like to access, for example '<span style="color: #dd6e35">/contact</span>'.<br>
+<br>
+To view all available pages, type '<span style="color: #dd6e35">/pages</span>'.<br>
+<br>
+For more help, type '<span style="color: #dd6e35">/help</span>'. <br>
+<br>
+<br>
+John-John

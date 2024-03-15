@@ -1,0 +1,37 @@
+<div class="contact-page-container">
+    <div class="about-me-section">
+        <br><br><br>
+        My name is John-John Carlsson, I am residing in a <br> 
+        small village somewhere in the forests in the middle <br>
+        of Sweden with my fiance and four year old son. <br><br><br>
+        After having worked at the local employer, a medium sized <br>
+        steel rolling mill, for far too long I took the leap to <br>
+        start studying and at the same time try something <br>
+        completely new to me; <i>programming</i>.<br>
+        <br><br>
+        I am doing my first year of a two year program called <br>
+        "AI oriented Pythondevelopment" at Teknikhögskolan, Västerås.<br>
+        <br><br>
+        Feel free to reach out to me below. <br>
+        John-John
+        <br><br><br>
+        carlsson.johnjohn@gmail.com <br>
+        <br>
+        <a href="https://www.facebook.com/johnjohn.carlsson" target="_blank">
+            Facebook
+        </a>
+        &emsp;
+        <a href="https://www.instagram.com/joppedoppe/" target="_blank">
+            Instagram
+        </a>
+        &emsp;
+        <a href="https://www.linkedin.com/in/john-john-carlsson-43573b72/" target="_blank">
+            LinkedIn
+        </a>
+        &emsp;
+        <a href="https://github.com/johnjohn-carlsson" target="_blank">
+            GitHub
+        </a>
+    </div>
+    <img src="static/images/family_pic.png" alt="" style="width:500px; height: auto;">
+</div>

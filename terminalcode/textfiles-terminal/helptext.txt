@@ -1,0 +1,17 @@
+<br><br><br><br>
+This website is made to look like the program VS Code. <br>
+VS Code is one (very popular) of many programs used to write computer code. <br>
+When using VS Code, you normally write your code into this grey field, <br>
+and use the <i>terminal</i> below (the 'Enter command...'-area) to run the code.<br>
+<br>
+Normal code is not written like '/help', but for the sake of usability I <br>
+decided it was a complicated enough way to navigate the website. <br>
+<br>
+Now get yourself to the directory page by clicking the 'Enter command...' box <br>
+below and type <span style="color: #dd6e35">/pages</span> and press enter. <br>
+From there you'll get an overview of the whole website.<br>
+<br>
+<br>
+Good luck!
+<br>
+John-John
