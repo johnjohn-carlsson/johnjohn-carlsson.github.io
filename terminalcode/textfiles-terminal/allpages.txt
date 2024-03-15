@@ -5,7 +5,7 @@ This is a list of all available pages:<br>
 <br>
 '<span style="color: #dd6e35">/blog</span>' -      My personal blog, more often than not I showcase my small coding hobbyprojects.<br>
 <br>
-'<span style="color: #dd6e35">/contact</span>' -   About me and contact information.<br>
+'<span style="color: #dd6e35">/about</span>' -     About me and contact information.<br>
 <br>
 '<span style="color: #dd6e35">/cv</span>' -        My resumé for generic purposes.<br>
 <br>

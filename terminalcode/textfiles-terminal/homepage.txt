@@ -3,7 +3,7 @@
 <br>
 This is my personal webpage. <br>
 If you are not familiar with VS Code, use the 'Enter command...' box <br>
-below to write what page you would like to access, for example '<span style="color: #dd6e35">/contact</span>'.<br>
+below to write what page you would like to access, for example '<span style="color: #dd6e35">/about</span>'.<br>
 <br>
 To view all available pages, type '<span style="color: #dd6e35">/pages</span>'.<br>
 <br>
