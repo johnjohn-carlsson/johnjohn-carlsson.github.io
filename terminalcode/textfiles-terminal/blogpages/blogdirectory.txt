@@ -17,7 +17,7 @@
         <p>As the saying goes; if it works and it’s stupid, it ain’t stupid.</p>
         
         <p>You can try evenSteven() <a href="https://john-john.nu/evensteven/" target="_blank">here</a>!</p>
-        <img src="terminalcode/static-terminal/images/evensteven_1.png" alt="" style="width: 700px; height: auto;">
+        <img src="/images/evensteven_1.png" alt="" style="width: 700px; height: auto;">
     </div>
 </div>
 -------------------------------------------------------------------------------------------------------------------------------------------- <br>
@@ -41,7 +41,7 @@
 
         <p>Til' next time. <br>
         John-John</p>
-        <img src="terminalcode/static-terminal/images/tarot_reader.png" alt="" style="width: 700px; height: auto;">
+        <img src="/images/tarot_reader.png" alt="" style="width: 700px; height: auto;">
     </div>
 </div>
 -------------------------------------------------------------------------------------------------------------------------------------------- <br>
@@ -99,7 +99,7 @@
         <p>John-John</p>
     </div>
     <div class="blogpost-image">
-        <img src="terminalcode/static-terminal/images/weathersend_example.png" alt="WeatherSender Example" style="width: 300px; height: auto;">
+        <img src="/images/weathersend_example.png" alt="WeatherSender Example" style="width: 300px; height: auto;">
     </div>
 </div>
 -------------------------------------------------------------------------------------------------------------------------------------------- <br>

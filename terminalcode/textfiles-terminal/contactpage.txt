@@ -33,5 +33,5 @@
             GitHub
         </a>
     </div>
-    <img src="static/images/family_pic.png" alt="" style="width:500px; height: auto;">
+    <img src="/images/family_pic.png" alt="" style="width:500px; height: auto;">
 </div>
