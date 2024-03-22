@@ -14,6 +14,19 @@ Although I've only recently started coding I was always a curious and problem-so
 
 Thank you for your time, have a look around why don't you!
 
+
+Latest updates
+------
+
+I am currently on the lookout for workplace learning sites for the fall of 2024!
+Ideally the work would consist of using the Python programming language within AI/machine learning field but I am open to all kinds of exciting work!
+Feel free to contact me at carlsson.johnjohn@gmail.com
+
+--
+
+[evenSteven()](https://johnjohn-carlsson.github.io/evensteven/) was added to the [portfolio page](https://johnjohn-carlsson.github.io/portfolio/).
+
+
 About this website
 ------
 This website was created with [GitHub Pages](https://pages.github.com/) using the Jekyll theme [Adademicpages](https://github.com/academicpages/academicpages.github.io). You are more than welcome to contact me with suggestions for improvements or bugfixes through your platform of choice, you can find my contact info under my image.
