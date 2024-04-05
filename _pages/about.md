@@ -24,4 +24,8 @@ Feel free to contact me at carlsson.johnjohn@gmail.com
 
 ------
 
+[Web Class Finished](https://john-john.nu/posts/2024/03/Web-Class-Finished/) blog post was added to the blog.
+
+------
+
 [evenSteven()](https://johnjohn-carlsson.github.io/evensteven/) was added to the [portfolio page](https://johnjohn-carlsson.github.io/portfolio/).
