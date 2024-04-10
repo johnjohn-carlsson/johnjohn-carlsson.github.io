@@ -24,6 +24,10 @@ Feel free to contact me at carlsson.johnjohn@gmail.com
 
 ------
 
+[Analyzing Garbage](https://john-john.nu/posts/2024/04/Analyzing-Garbage/) blog post was added to the blog.
+
+------
+
 [Web Class Finished](https://john-john.nu/posts/2024/03/Web-Class-Finished/) blog post was added to the blog.
 
 ------
