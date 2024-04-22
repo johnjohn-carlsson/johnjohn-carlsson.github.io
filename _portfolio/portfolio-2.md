@@ -15,4 +15,4 @@ This game was created with Pygame, converted to HTML code with the module AsyncI
 Until I figure out how to play directly on this page, you can press [this link](https://joppedoppe.itch.io/cosmic-chaos) to go to the itch.io game location and play the game.
 
 
-<img src='/images/CC_example.png' style='width=300px; height=600px;'>
+<img src='/images/CC_example.png' style='width:50%; height:auto;'>
