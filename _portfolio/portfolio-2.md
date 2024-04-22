@@ -1,13 +1,18 @@
 ---
-title: "evenSteven()"
-excerpt: "The dynamic debt calculator!<br/><img src='/images/evensteven_1.png' style='width: 500px; height: 300px;'>"
+title: "Cosmic Chaos"
+excerpt: "Basic co-op game created with Pygame.<br/><img src='/images/CC_cover.png' style='width:500px; height:300px'>"
 collection: portfolio
 ---
 
-I may not be satisfied (like at all) with the front-end of the program but hey at least it's something I made,
-so I might aswell upload it here on the portfolio page.
-evenSteven() is my helper at the end of the month when me and my fiance are going through our bills together, I simply enter our names, how much we've already paid during the month, how much we each have left to pay and what our salary for the month was, and Steven figures out how much of the remaining bills should be paid by each person depending on how big their salary was relative to the other persons salaries and how much they've already paid.
+[PLAY HERE](https://joppedoppe.itch.io/cosmic-chaos)
 
-One thing to note is that Steven assumes all bills and payments entered are shared expenses. So the scenario is basically a shared household economy but with two separate bank accounts.
+The idea was to create a game where you have to cooperate to survive. 
+This game was made to be played on a phone with the phone laying flat on a table with one player on either side vertically of the phone. Unfortunately because of the conversion I had to get rid of simultaneous controlling when playing on mobile, so for now you have to go either up or down one direction at a time.
 
-evenSteven() is only available in swedish, and you can try it out [here](https://johnjohn-carlsson.github.io/evensteven/).
+To get technical, this bug occurs because when I convert the game to be played on itch.io the game interprets touch clicks as mouseclicks, and the logic will not allow two separate mouseclicks simultaneously. You could add actual touch controls but you would need to publish an actual mobile game for it to work, not convert to HTML and play in browser like I do now. So until I start publishing games on some app store this will suffice.
+
+This game was created with Pygame, converted to HTML code with the module AsyncIO and finally uploaded to itch.io.
+Until I figure out how to play directly on this page, you can press [this link](https://joppedoppe.itch.io/cosmic-chaos) to go to the itch.io game location and play the game.
+
+
+<img src='/images/CC_example.png'>
