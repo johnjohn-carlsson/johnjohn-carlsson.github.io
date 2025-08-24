@@ -46,17 +46,63 @@
   nav a:nth-child(4){ --a:300deg; }  /* 10 */
 
   @media (max-width: 900px){ :root{ --size: 420px; --ring-radius: 360px; } .title{ font-size: 2.2rem; } }
-  @media (max-width: 620px){
+    @media (max-width: 620px){
     :root { --size: clamp(240px, 90vw, 70vh); }
     .title { font-size: 1.8rem; }
-    .stage { display:flex; flex-direction:column; align-items:center; gap:14px; }
-    nav{
-      position: static; pointer-events:auto; display:grid; grid-template-columns: repeat(2, minmax(0,1fr));
-      gap:12px; width:100%; max-width:520px; margin:0 auto; justify-items:stretch;
+
+    .stage {
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:14px;
+        width: 100%;
+        max-width: var(--size);
     }
-    nav a{ position:static; transform:none; --pos:none; text-align:center; font-size:18px; padding:12px 14px; border-radius:14px; width:100%; }
-    nav a:hover{ transform: scale(1.05); }
-  }
+
+    nav {
+        position: static;
+        pointer-events:auto;
+        display:grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap:12px;
+        width:90%;               /* keep some gutter */
+        max-width:420px;
+        margin:0 auto;
+        padding: 0 clamp(12px, 4vw, 20px); /* side padding so buttons don't touch edges */
+        justify-content:center;
+        justify-items:stretch;
+    }
+
+    nav a {
+        position: static;
+        left: auto;
+        top: auto;
+        transform: none;
+        translate: 0 0;           /* reset desktop translate */
+        --pos: none;
+
+        text-align: center;
+        font-size: 18px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        width: 100%;
+    }
+
+    nav a:hover {
+        transform: scale(1.05);
+    }
+
+    /* prevent horizontal scrollbars */
+    html, body { overflow-x: hidden; }
+    }
+
+    footer {
+  margin-top: auto;          /* push footer to bottom if space allows */
+  padding: 16px 0;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+}
 </style>
 </head>
 <body>
@@ -65,7 +111,7 @@
 
     <div class="stage" id="stage">
       <div class="head">
-        <video id="vid" preload="metadata" playsinline muted poster="poster.jpg">
+        <video id="vid" preload="metadata" playsinline muted poster="static_jj.jpeg">
         <source src="headturn_scrub.webm" type="video/webm">
         <source src="headturn_scrub.mp4"  type="video/mp4">
         Sorry, your browser doesn’t support embedded video.
@@ -80,6 +126,10 @@
       </nav>
     </div>
   </div>
+
+  <footer>
+  © 2025 John-John Carlsson. All rights reserved.
+</footer>
 
 <script>
 /* CCW timestamp-driven scrub */
