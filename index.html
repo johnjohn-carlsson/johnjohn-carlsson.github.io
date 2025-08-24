@@ -65,7 +65,11 @@
 
     <div class="stage" id="stage">
       <div class="head">
-        <video id="vid" src="headturn_scrub.mp4" preload="auto" playsinline muted></video>
+        <video id="vid" preload="metadata" playsinline muted poster="poster.jpg">
+        <source src="headturn_scrub.webm" type="video/webm">
+        <source src="headturn_scrub.mp4"  type="video/mp4">
+        Sorry, your browser doesn’t support embedded video.
+        </video>
       </div>
 
       <nav>
