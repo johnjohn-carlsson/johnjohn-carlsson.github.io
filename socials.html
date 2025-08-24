@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Socials — john-john.nu</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100svh;background:#0b0b0b;color:#e8e8e8;font-family:system-ui,Inter,Segoe UI,Roboto,Arial,sans-serif;
+       display:flex;flex-direction:column;align-items:center;padding:24px 16px;gap:16px}
+  header, .list, .btnbar{max-width:720px;width:100%}
+  h1{margin:0 0 8px;font-size:clamp(1.6rem,3.5vw,2.4rem)}
+  p{margin:0 0 8px;opacity:.75}
+  .list{display:grid; gap:12px}
+  a.item{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:14px 16px; border-radius:14px; background:#111; color:#e8e8e8; text-decoration:none;
+    box-shadow:0 12px 40px rgba(0,0,0,.5); border:1px solid #222;
+    transition: background .15s ease, transform .12s ease;
+  }
+  a.item:hover{ background:#151515; transform: translateY(-1px); }
+  .item span{opacity:.8}
+  .btnbar{display:flex;justify-content:flex-end}
+  .back{margin-top:8px;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid #2b2b2b;
+        background:#181818;color:#eee;text-decoration:none}
+  .back:hover{background:#222}
+</style>
+</head>
+<body>
+  <header>
+    <h1>Socials</h1>
+  </header>
+
+  <div class="list">
+    <a class="item" href="mailto:carlsson.johnjohn@gmail.com">
+        <strong>Email</strong><span>carlsson.johnjohn@gmail.com</span>
+    </a>
+    <a class="item" href="https://www.instagram.com/joppedoppe" target="_blank" rel="noopener">
+      <strong>Instagram</strong><span>@joppedoppe</span>
+    </a>
+    <a class="item" href="https://www.linkedin.com/in/john-john-carlsson-43573b72/" target="_blank" rel="noopener">
+      <strong>LinkedIn</strong><span>/in/john-john-carlsson-43573b72/</span>
+    </a>
+    <a class="item" href="https://github.com/johnjohn-carlsson" target="_blank" rel="noopener">
+      <strong>GitHub</strong><span>@johnjohn-carlsson</span>
+    </a>
+  </div>
+
+  <div class="btnbar">
+    <a class="back" href="index.html">⬅ Back to homepage</a>
+  </div>
+</body>
+</html>
