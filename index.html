@@ -1,34 +1,254 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Creative Engineer - Slightly Unhinged in a Good Way</title>
-    <meta name="description" content="Creative Engineer specializing in interactive web experiences, frontend development, and creative coding. I build playful, high-performance websites and experiments." />
-    <meta name="author" content="Your Name" />
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>john-john.nu</title>
+<style>
+  :root {
+    /* Desktop preferred size, but we’ll clamp on smaller screens */
+    --size: 600px;         /* target head diameter on large screens */
+    --ring-radius: 500px;  /* distance of links from center (desktop) */
+    --page-top: 12px;
+    --page-bottom: 32px;
+  }
+  * { box-sizing: border-box; }
 
-    <meta property="og:title" content="Creative Engineer - Your Name" />
-    <meta property="og:description" content="I build playful, high-performance websites and experiments at the intersection of technology and creativity." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  body {
+    margin: 0;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: var(--page-top);
+    padding-bottom: var(--page-bottom);
+    background: #0b0b0b;
+    color: #e8e8e8;
+    font-family: system-ui, Inter, Segoe UI, Roboto, Arial, sans-serif;
+  }
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+  }
 
-  <body>
-    <div id="root"></div>
-    <script>
-      // Handle GitHub Pages SPA routing
-      (function() {
-        var redirect = sessionStorage.getItem('redirect');
-        if (redirect) {
-          sessionStorage.removeItem('redirect');
-          history.replaceState(null, null, redirect);
-        }
-      })();
-    </script>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  .title {
+    font-size: 3rem;
+    font-weight: 600;
+    border-radius: 6px;
+    backdrop-filter: blur(4px);
+    text-align: center;
+  }
+
+  /* Stage centers content and limits max width */
+  .stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    max-width: var(--size);
+  }
+
+  /* Fluid circular head:
+     - width: 100% of stage
+     - keep a perfect square via aspect-ratio
+     - radius 50% makes it a circle
+  */
+  .head {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,.55),
+                inset 0 0 40px rgba(255,255,255,.04);
+    background:#111;
+  }
+  video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ===== Desktop circular nav ===== */
+  nav {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  nav a {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform-origin: center center;
+    transform-box: fill-box;
+    translate: -50% -50%;
+    pointer-events: auto;
+
+    padding: 14px 24px;
+    background: rgba(255,255,255,0.08);
+    color: #eee;
+    text-decoration: none;
+    border-radius: 16px;
+    font-size: 20px;
+    font-weight: 500;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+    transition: background 150ms ease, transform 120ms ease;
+
+    /* base positioning on the ring */
+    --pos: rotate(var(--a)) translateY(var(--ring-radius)) rotate(calc(-1 * var(--a)));
+    transform: var(--pos);
+  }
+
+  nav a:hover {
+    background: rgba(255,255,255,0.18);
+    transform: var(--pos) scale(1.08);
+  }
+
+  /* 2,4,8,10 o'clock */
+  nav a:nth-child(1) { --a: 60deg;  }  /* 2 */
+  nav a:nth-child(2) { --a: 120deg; }  /* 4 */
+  nav a:nth-child(3) { --a: 240deg; }  /* 8 */
+  nav a:nth-child(4) { --a: 300deg; }  /* 10 */
+
+  /* ===== Tablet: gently scale down head and ring ===== */
+  @media (max-width: 900px) {
+    :root { --size: 420px; --ring-radius: 360px; }
+    .title { font-size: 2.2rem; }
+  }
+
+  /* ===== Mobile: clamp head size + 2×2 links under avatar ===== */
+  @media (max-width: 620px) {
+    /* Head will now be the smaller of 90vw or 70vh, never below 240px */
+    :root { --size: clamp(240px, 90vw, 70vh); }
+
+    .title { font-size: 1.8rem; }
+
+    .stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      max-width: var(--size);
+    }
+
+    /* Grid below avatar, centered and full width of stage */
+    nav {
+      position: static;
+      pointer-events: auto;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      justify-items: stretch;
+    }
+
+    nav a {
+      position: static;
+      transform: none;  --pos: none;
+      text-align: center;
+      font-size: 18px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      width: 100%;
+    }
+
+    nav a:hover { transform: scale(1.05); }
+  }
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="title">Oh look, a cursor!</div>
+
+    <div class="stage" id="stage">
+      <div class="head">
+        <video id="vid" src="headturn_scrub.mp4" preload="auto" playsinline muted></video>
+      </div>
+
+      <nav>
+        <a href="#">Socials</a>
+        <a href="#">Resume</a>
+        <a href="#">Contact</a>
+        <a href="#">Portfolio</a>
+      </nav>
+    </div>
+  </div>
+
+<script>
+/* === CCW timestamp-driven scrub === */
+(function(){
+  const vid   = document.getElementById('vid');
+  const stage = document.getElementById('stage');
+
+  const TIMES_12_INPUT = [
+    "00.0","27.0","25.0","22.0","20.0","19.0",
+    "16.0","11.0","10.0","06.0","03.0","02.0"
+  ];
+  const DUR_FALLBACK = 30;
+
+  function parseTS(x){
+    if(typeof x==='number') return x;
+    if(typeof x!=='string') return NaN;
+    if(x.includes(':')){
+      const [m,s]=x.split(':');
+      return (+m||0)*60 + (parseFloat(s)||0);
+    }
+    return parseFloat(x);
+  }
+
+  const LABELS_INPUT = [12,1,2,3,4,5,6,7,8,9,10,11];
+  const timeMap = {};
+  LABELS_INPUT.forEach((lab,i)=> timeMap[lab] = parseTS(TIMES_12_INPUT[i]));
+  const LABELS_CCW = [12,11,10,9,8,7,6,5,4,3,2,1];
+  const timesCCW = LABELS_CCW.map(lab => timeMap[lab]);
+
+  let duration = DUR_FALLBACK;
+  vid.addEventListener('loadedmetadata', ()=>{
+    duration = vid.duration || DUR_FALLBACK;
+    vid.pause();
+  }, { once: true });
+
+  function angleCCWFromCenter(e){
+    const r = stage.getBoundingClientRect();
+    const cx = r.left + r.width/2, cy = r.top + r.height/2;
+    const dx = e.clientX - cx, dy = e.clientY - cy;
+    let deg = Math.atan2(-dy, dx) * 180/Math.PI;
+    if (deg < 0) deg += 360;
+    return deg;
+  }
+
+  function timeFromAngleCCW(deg){
+    const shifted = (deg - 90 + 360) % 360;   // 0° at 12 o'clock
+    const seg = Math.floor(shifted / 30);     // 12->11->10 … CCW
+    const f = (shifted % 30) / 30;            // 0..1 within segment
+    let t0 = timesCCW[seg], t1 = timesCCW[(seg + 1) % 12];
+    if (t1 <= t0) t1 += duration;             // wrap
+    return (t0 + f * (t1 - t0)) % duration;
+  }
+
+  let rafPending = false, nextTime = 0;
+  function onPointerMove(e){
+    const deg = angleCCWFromCenter(e);
+    nextTime = timeFromAngleCCW(deg);
+    if (!rafPending){
+      rafPending = true;
+      requestAnimationFrame(()=>{
+        if (Math.abs(vid.currentTime - nextTime) > 0.0005)
+          vid.currentTime = nextTime;
+        rafPending = false;
+      });
+    }
+  }
+
+  window.addEventListener('mousemove', onPointerMove, { passive: true });
+  window.addEventListener('touchmove', (e)=>{
+    const t0 = e.touches[0]; if (!t0) return;
+    onPointerMove({ clientX: t0.clientX, clientY: t0.clientY });
+  }, { passive: true });
+})();
+</script>
+</body>
 </html>
