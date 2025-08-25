@@ -6,15 +6,19 @@
 <title>john-john.nu</title>
 <style>
   :root{
-    --hud-gap: 12px;           /* space between buttons */
-    --hud-pad: 16px;           /* safe area from edges */
+    --hud-gap: 12px;                 /* space between buttons */
+    --hud-pad: 16px;                 /* safe area from edges */
     --btn-fz: 20px;
+
+    /* Mobile-only: vertical position of the *bottom edge* of the TV screen
+       inside the mobile frame image. Because the frame scales by width, use vw. */
+    --screen-bottom-mobile: 100vw;    /* tweak 58–68 as needed to match your PNG */
   }
   *{ box-sizing: border-box; }
 
   html, body {
     margin: 0;
-    height: 100%;
+    height: 100dvh;
     background: #000;          /* page behind TV if it ever shows */
     color: #e8e8e8;
     font-family: system-ui, Inter, Segoe UI, Roboto, Arial, sans-serif;
@@ -25,7 +29,7 @@
   .tv {
     position: relative;
     width: 100vw;
-    height: 100vh;             /* fill viewport */
+    height: 100dvh;             /* fill viewport */
     overflow: hidden;
   }
 
@@ -131,34 +135,33 @@
       gap: 18px;
     }
   }
-
-  /* ===== Mobile-specific behavior =====
-     On mobile, make the frame scale by WIDTH (not by height),
-     and pull the HUD up so it's directly above the safe area. */
-  @media (max-width: 899px) {
-    /* let the frame size to full width and auto height */
-    .tv-frame {
-      width: 100%;
-      height: auto;
-      top: 0;
-      bottom: auto;
-    }
-
-    /* match the video to width-based sizing; keep centered */
-    .tv > video {
-      width: 100%;
-      height: auto;
-      left: 50%;
-      top: 0;
-      transform: translateX(-50%); /* horizontal center */
-      object-fit: contain;         /* no cropping */
-    }
-
-    /* pull buttons up on short screens */
-    .hud {
-      bottom: max(6px, env(safe-area-inset-bottom));
-    }
+/* ===== Mobile-specific behavior =====
+      On mobile, the frame scales by WIDTH; place the HUD directly under
+      the screen cutout by anchoring it to --screen-bottom-mobile. */
+@media (max-width: 899px) {
+  .tv-frame {
+    width: 100%;
+    height: auto;
+    top: 0;
+    bottom: auto;
   }
+
+  .tv > video {
+    width: 100%;
+    height: auto;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    object-fit: contain;
+  }
+
+  /* Buttons directly under the screen, not inside it */
+  .hud {
+    position: absolute; /* Already in your code, but good to double-check */
+    top: var(--screen-bottom-mobile);
+    bottom: auto; /* Resets the bottom property */
+  }
+}
 
   /* Tiny footer (overlaid, unobtrusive) */
   footer {
