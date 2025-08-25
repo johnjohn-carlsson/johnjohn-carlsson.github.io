@@ -41,16 +41,16 @@
 
   /* Cap size only on very large screens */
   @media (min-width: 1200px) {
-  .tv > video {
-    --video-offset-y: 52%; /* adjust here */
-    max-width: 700px;
-    max-height: 80vh;
-    left: 50%;
-    top: var(--video-offset-y);
-    transform: translate(-50%, -50%);
-    position: absolute;
+    .tv > video {
+      --video-offset-y: 52%; /* adjust here */
+      max-width: 700px;
+      max-height: 80vh;
+      left: 50%;
+      top: var(--video-offset-y);
+      transform: translate(-50%, -50%);
+      position: absolute;
+    }
   }
-}
 
   /* TV frame overlay (PNG with transparent screen cut-out) */
   .tv-frame {
@@ -110,7 +110,7 @@
     border: 1px solid rgba(255,255,255,0.08);
     backdrop-filter: blur(6px);
     box-shadow:
-        0 0 12px rgba(0, 150, 255, 0.6),   /* blue glow */
+        0 0 12px rgba(0, 150, 255, 0.6),
         0 8px 24px rgba(0,0,0,.45);
     transition: transform .12s ease, background .15s ease, box-shadow .2s ease;
   }
@@ -134,7 +134,7 @@
 
   /* ===== Mobile-specific behavior =====
      On mobile, make the frame scale by WIDTH (not by height),
-     and size the video the same way so it stays inside the screen. */
+     and pull the HUD up so it's directly above the safe area. */
   @media (max-width: 899px) {
     /* let the frame size to full width and auto height */
     .tv-frame {
@@ -152,6 +152,11 @@
       top: 0;
       transform: translateX(-50%); /* horizontal center */
       object-fit: contain;         /* no cropping */
+    }
+
+    /* pull buttons up on short screens */
+    .hud {
+      bottom: max(6px, env(safe-area-inset-bottom));
     }
   }
 
