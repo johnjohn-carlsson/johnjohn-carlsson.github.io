@@ -9,7 +9,6 @@
     --hud-gap: 12px;           /* space between buttons */
     --hud-pad: 16px;           /* safe area from edges */
     --btn-fz: 20px;
-    --screen-inset: 6vmin;     /* how much to zoom video out inside the frame */
   }
   *{ box-sizing: border-box; }
 
@@ -30,31 +29,39 @@
     overflow: hidden;
   }
 
-  /* Video layer (under the frame) */
+  /* Video layer (under the frame) — default desktop/tablet behavior */
   .tv > video {
     position: absolute;
-    left: 50%;
-    top: 50%;
+    inset: 0;
     width: 100%;
-    height: auto;
-    max-width: 700px;      /* cap width */
-    max-height: 80vh;      /* optional cap by screen height */
-    transform: translate(-50%, -50%);
-    object-fit: contain;   /* makes sure entire head is visible */
-    display: block;
+    height: 100%;
+    object-fit: contain;   /* keep whole head visible */
     z-index: 0;
-    }
+  }
+
+  /* Cap size only on very large screens */
+  @media (min-width: 1200px) {
+  .tv > video {
+    --video-offset-y: 52%; /* adjust here */
+    max-width: 700px;
+    max-height: 80vh;
+    left: 50%;
+    top: var(--video-offset-y);
+    transform: translate(-50%, -50%);
+    position: absolute;
+  }
+}
 
   /* TV frame overlay (PNG with transparent screen cut-out) */
   .tv-frame {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
-    object-fit: cover;         /* same fit as video -> perfect alignment */
-    pointer-events: none;      /* don't block clicks */
+    object-fit: cover;
+    pointer-events: none;
     z-index: 2;
   }
 
-  /* Optional subtle scanlines (comment out if you don't want them) */
+  /* Optional subtle scanlines */
   .scanlines {
     position: absolute; inset: 0; z-index: 1; pointer-events: none;
     background:
@@ -73,7 +80,7 @@
   .title {
     position: absolute; left: 50%; top: calc(env(safe-area-inset-top) + 12px);
     transform: translateX(-50%);
-    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-size: clamp(1.5rem, 3.5vw, 3rem);
     font-weight: 700;
     text-shadow: 0 2px 18px rgba(0,0,0,.65);
     z-index: 3;
@@ -94,27 +101,27 @@
 
   .hud a {
     display: inline-flex; align-items: center; justify-content: center;
-    padding: 12px 16px;
-    font-size: clamp(16px, 2.2vw, var(--btn-fz));
+    padding: clamp(8px, 1.5vw, 16px) clamp(12px, 2vw, 20px);
+    font-size: clamp(14px, 2vw, var(--btn-fz));
     font-weight: 600;
     color: #eee; text-decoration: none;
     border-radius: 16px;
     background: rgba(20,20,20,0.65);
     border: 1px solid rgba(255,255,255,0.08);
     backdrop-filter: blur(6px);
-    box-shadow: 
+    box-shadow:
         0 0 12px rgba(0, 150, 255, 0.6),   /* blue glow */
-        0 8px 24px rgba(0,0,0,.45);        /* existing shadow */
+        0 8px 24px rgba(0,0,0,.45);
     transition: transform .12s ease, background .15s ease, box-shadow .2s ease;
-    }
+  }
 
-    .hud a:hover { 
-    transform: scale(1.05); 
-    background: rgba(40,40,40,0.7); 
-    box-shadow: 
-        0 0 18px rgba(0, 180, 255, 0.9),   /* stronger blue glow on hover */
+  .hud a:hover {
+    transform: scale(1.05);
+    background: rgba(40,40,40,0.7);
+    box-shadow:
+        0 0 18px rgba(0, 180, 255, 0.9),
         0 8px 28px rgba(0,0,0,.55);
-    }
+  }
 
   /* Wider screens: show buttons in one row centered */
   @media (min-width: 900px) {
@@ -123,7 +130,29 @@
       justify-content: center;
       gap: 18px;
     }
-    .hud a { padding: 12px 22px; }
+  }
+
+  /* ===== Mobile-specific behavior =====
+     On mobile, make the frame scale by WIDTH (not by height),
+     and size the video the same way so it stays inside the screen. */
+  @media (max-width: 899px) {
+    /* let the frame size to full width and auto height */
+    .tv-frame {
+      width: 100%;
+      height: auto;
+      top: 0;
+      bottom: auto;
+    }
+
+    /* match the video to width-based sizing; keep centered */
+    .tv > video {
+      width: 100%;
+      height: auto;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%); /* horizontal center */
+      object-fit: contain;         /* no cropping */
+    }
   }
 
   /* Tiny footer (overlaid, unobtrusive) */
@@ -149,8 +178,11 @@
     <!-- Optional CRT flair -->
     <div class="scanlines" aria-hidden="true"></div>
 
-    <!-- TV frame overlay (PNG with transparent screen) -->
-    <img class="tv-frame" src="noscreen_img.png" alt="" aria-hidden="true">
+    <!-- TV frame overlay -->
+    <picture>
+      <source srcset="noscreen_img_mobile.png" media="(max-width: 899px)">
+      <img class="tv-frame" src="noscreen_img.png" alt="" aria-hidden="true">
+    </picture>
 
     <!-- HUD: title + links -->
     <nav class="hud">
@@ -200,11 +232,11 @@
   }
 
   function timeFromAngleCCW(deg){
-    const shifted = (deg - 90 + 360) % 360; // 0° at 12 o'clock, increasing CCW
+    const shifted = (deg - 90 + 360) % 360;
     const seg     = Math.floor(shifted / 30);
     const f       = (shifted % 30) / 30;
     let t0 = times[seg], t1 = times[(seg + 1) % 12];
-    if (t1 <= t0) t1 += duration;          // wrap
+    if (t1 <= t0) t1 += duration;
     return (t0 + f * (t1 - t0)) % duration;
   }
 
