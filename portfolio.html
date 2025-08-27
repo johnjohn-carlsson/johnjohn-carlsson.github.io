@@ -8,22 +8,142 @@
   *{box-sizing:border-box}
   body{margin:0;min-height:100svh;background:#0b0b0b;color:#e8e8e8;font-family:system-ui,Inter,Segoe UI,Roboto,Arial,sans-serif;
        display:flex;flex-direction:column;align-items:center;padding:24px 16px;gap:16px}
-  header, .grid, .btnbar{max-width:1080px;width:100%}
+  header, .grid, .btnbar, .details-wrap{max-width:1080px;width:100%}
   h1{margin:0 0 8px;font-size:clamp(1.6rem,3.5vw,2.4rem)}
   .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
   .card{background:#111;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.5);padding:16px;min-height:160px;border:1px solid #222}
   .btnbar{display:flex;justify-content:flex-end}
   .back{margin-top:8px;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid #2b2b2b;background:#181818;color:#eee;text-decoration:none}
   .back:hover{background:#222}
+
+  /* Card images */
+  .card img{max-width:100%;max-height:120px;display:block;margin:0 auto 8px;height:auto}
+
+  /* Pure CSS toggle system (no JS) */
+  .proj-toggle{position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden}
+
+  /* Make cards clickable via <label> */
+  .project{cursor:pointer;display:block}
+  .project:focus-within,
+  .project:hover{border-color:#2b2b2b}
+
+  /* Details panel styles */
+  .details{
+    background:#111;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.5);
+    padding:16px;border:1px solid #222;display:none;
+    text-align:center; /* center text in big panel */
+  }
+  .details h2{margin:0 0 8px;font-size:clamp(1.2rem,2.5vw,1.6rem)}
+  .details p{margin:0 0 12px;line-height:1.5}
+  .details img{
+    max-width:100%;max-height:360px;height:auto;display:block;
+    margin:0 auto 12px; /* center image */
+    border-radius:12px;object-fit:contain
+  }
+  .details .links{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .details .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;
+    border:1px solid #2b2b2b;background:#181818;color:#eee;text-decoration:none
+  }
+  .details .btn:hover{background:#222}
+
+  /* Show the corresponding panel when its radio is checked */
+  #proj-horseman:checked ~ .details-wrap #panel-horseman,
+  #proj-muskifier:checked ~ .details-wrap #panel-muskifier,
+  #proj-flickpick:checked  ~ .details-wrap #panel-flickpick { display:block; }
+
+  /* Gentle reveal */
+  .details{animation:fadeIn .18s ease-out}
+  @keyframes fadeIn { from{opacity:.6;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
 </style>
 </head>
 <body>
   <header><h1>Portfolio</h1></header>
+
+  <!-- Radio toggles (same name => only one open). First is pre-selected. -->
+  <input class="proj-toggle" type="radio" name="proj" id="proj-horseman" checked>
+  <input class="proj-toggle" type="radio" name="proj" id="proj-muskifier">
+  <input class="proj-toggle" type="radio" name="proj" id="proj-flickpick">
+
   <section class="grid">
-    <div class="card">Project A</div>
-    <div class="card">Project B</div>
-    <div class="card">Project C</div>
+    <!-- Each card is a <label> pointing to its radio -->
+    <label class="card project" for="proj-horseman">
+      <img src="horseman.png" alt="Horseman IV Clothing">
+      HORSEMAN IV CLOTHING <br>
+      Custom shirt designs with a Swedish twist
+    </label>
+
+    <label class="card project" for="proj-muskifier">
+      <img src="muskifier.png" alt="De-Muskifier">
+      De-Muskifier <br>
+      The browser addon that makes you forget about Elon Musk
+    </label>
+
+    <label class="card project" for="proj-flickpick">
+      <img src="fp_home.png" alt="FlickPick">
+      FlickPick <br>
+      Keyword based movie finder using machine learning
+    </label>
   </section>
+
+  <!-- Details area (single area; the selected panel appears here) -->
+  <section class="details-wrap">
+    <article id="panel-horseman" class="details" aria-live="polite">
+      <img src="horseman.png" alt="HORSEMAN IV CLOTHING preview">
+      <h2>HORSEMAN IV CLOTHING</h2>
+      <p>
+        This project is my way of scratching any occasional drawing and/or design itch.<br>
+        A good amount of the designs ideas are initially made using AI tools like <a href="https://www.midjourney.com/explore?tab=video_top" target="_blank"><i>Midjourney</i></a> and then finalized or edited by me. <br>
+        The website is made using the Shopify suite, and the printing is made to order via Printful. This means I don't need to hold any stock; I can focus on designing and administrating while the actual production is handled by Shopify & Printful. Pretty neat, right?
+      </p>
+      <div class="links">
+        <a class="btn" href="https://horsemaniv.com/" target="_blank" rel="noopener noreferrer">View site</a>
+      </div>
+    </article>
+
+    <article id="panel-muskifier" class="details" aria-live="polite">
+      <img src="muskifier.png" alt="De-Muskifier preview">
+      <h2>De-Muskifier</h2>
+      <p>
+        Ever since I started studying programming my friends have had a habit of giving me weird and funny ideas for side projects, and finally one of them said “I'm so sick of hearing about Elon Musk everywhere. Can you create a solution?” and thats really where this thing started. <br>
+        The result is a browser extension for Firefox that replaces images and mentions of Elon Musk/Tesla/SpaceX with images of raccoons and facts about them, because why not? Not only are you freed from hearing about your least favorite billionaire - you are at the same time being given awesome images of raccoons and weird and funny facts about them. You'll have forgotten about him in no time!<br><br>
+        A few notes about this extension:<br>
+        - It replaces content by keyword search from scanning your active page.<br>
+        - Sometimes it works "too well" and hides unrelated stuff. Did an article about rocket science vanish? Probably. But did it also get replaced with something wholesome about raccoons? Absolutely.<br>
+        - The point isn't perfection - it's to make you stop thinking about Elon Musk and instead channel your energy into something joyful, like raccoons!<br><br>
+        Why raccoons?<br>
+        Raccoons are great! Did you see the way they carry stuff while walking? They're like little furry gremlins, who doesn't love them?
+      </p>
+      <div class="links">
+        <a class="btn" href="https://addons.mozilla.org/en-US/firefox/addon/de-muskifier/" target="_blank" rel="noopener noreferrer">Get the addon (Firefox)</a>
+        <a class="btn" href="https://github.com/johnjohn-carlsson/de-muskifier" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a class="btn" href="https://www.reddit.com/r/SideProject/comments/1i3dj6x/demuskifier_the_extension_that_removes_elon_musk/?show=original" target="_blank" rel="noopener noreferrer">Reddit Post</a>
+      </div>
+    </article>
+
+    <article id="panel-flickpick" class="details" aria-live="polite">
+      <h2>FlickPick</h2>
+      <p>
+        Moviematching powered by machine learning!<br>
+        The user input is converted from a text into a number called a vector,
+        using something appropriately called a <a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html" target="_blank"><i>vectorizer</i></a>. <br>
+        Something similar is then done to the plotline and/or keywords of every movie in the database, <br>
+        and using a type of machinelearning called <a href="https://scikit-learn.org/stable/modules/neighbors.html" target="_blank"><i>Nearest Neighbors</i></a>, FlickPick compares the <br>
+        input <i>vector</i> to each movies' <i>vector</i> and finds the closest matches, or <i>nearest neighbors</i>.
+        <br><br>
+        Et voilà!<br>
+        We have our matches.<br><br>
+        Note:<br>
+        FlickPick was created as a group assignment for my machinelearning course with a four person team.<br>
+        I was responsible for creating the frontend and the actual vectorizing and machine learning parts of the project.<br>
+        <img src="fp_home.png" alt="FlickPick preview">
+        <i>FlickPick frontpage.</i><br>
+        <img src="fp_result.png" alt="FlickPick preview">
+        <i>FlickPick results page. The results shown are the three nearest neighbors found based on the keywords of the search.</i>
+      </p>
+    </article>
+  </section>
+
   <div class="btnbar"><a class="back" href="index.html">⬅ Back to homepage</a></div>
 </body>
 </html>
