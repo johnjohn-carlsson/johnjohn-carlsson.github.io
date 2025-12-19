@@ -24,6 +24,13 @@
   .back{margin-top:8px;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid #2b2b2b;
         background:#181818;color:#eee;text-decoration:none}
   .back:hover{background:#222}
+  .photo{
+    width:300px; height:300px;
+    border-radius:50%; overflow:hidden;
+    box-shadow:0 8px 24px rgba(0,0,0,.55);
+    margin:0 auto;
+  }
+  .photo img{width:100%;height:100%;object-fit:cover;display:block}
 </style>
 </head>
 <body>
@@ -46,8 +53,19 @@
     </a>
   </div>
 
-  <div class="btnbar">
-    <a class="back" href="index.html">⬅ Back to homepage</a>
-  </div>
+  
+    <div class="bio">
+      <p>Hi there!</p>
+      <p>I'm John-John. I'm located in a small village in Dalarna, the heart of Sweden. Think "Midsommar" movie without the crazy part, almost..</p>
+      <p>If I had to summarize my personality I'd go with "curiosity meets creativity". Creating new shit is just the best, be it painting, programming or building some whacky lego creature with my son, the wonderful feeling is always the same. This webpage is just one example of my creations, you can find more on my portfolio page.</p>
+      <p>For work, I'm at my happiest and most useful whenever I get to be creative. If you have any fun projects you want a set of fresh eyes on, let me know!</p>
+      <p>JJ</p>
+    </div>
+
+    <div class="photo">
+      <img src="jj_img.jpg" alt="Portrait of me" />
+    </div>
+
+
 </body>
 </html>
