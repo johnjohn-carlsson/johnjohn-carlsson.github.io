@@ -4,206 +4,328 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>john-john.nu</title>
-<style>
-  :root{
-    --hud-gap: 12px;                 /* space between buttons */
-    --hud-pad: 16px;                 /* safe area from edges */
-    --btn-fz: 20px;
 
-    /* Mobile-only: vertical position of the *bottom edge* of the TV screen
-       inside the mobile frame image. Because the frame scales by width, use vw. */
-    --screen-bottom-mobile: 100vw;    /* tweak 58–68 as needed to match your PNG */
-  }
-  *{ box-sizing: border-box; }
+<style>
+  * { box-sizing: border-box; }
 
   html, body {
     margin: 0;
     height: 100dvh;
-    background: #000;          /* page behind TV if it ever shows */
-    color: #e8e8e8;
+    background: #000;
+    overflow: hidden;
     font-family: system-ui, Inter, Segoe UI, Roboto, Arial, sans-serif;
-    overflow: hidden;          /* TV fills screen; no scroll */
   }
 
-  /* === Fullscreen TV compositing === */
+  /* === Fullscreen stage === */
   .tv {
     position: relative;
     width: 100vw;
-    height: 100dvh;             /* fill viewport */
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
   }
 
-  /* Video layer (under the frame) — default desktop/tablet behavior */
-  .tv > video {
+  /* === Shared scaler ===
+     THIS defines how the entire TV scales */
+  .tv-scale {
+    position: relative;
+    height: 100%;
+    aspect-ratio: 16 / 9; /* adjust if your TV image differs */
+  }
+
+  /* Everything inside shares the same box */
+  .tv-scale > video,
+  .tv-frame,
+  .scanlines,
+  .hotspots {
     position: absolute;
     inset: 0;
+  }
+
+  .tv-scale > video {
+  transform: scale(0.92);
+  }
+
+  /* === Video === */
+  .tv-scale > video {
     width: 100%;
     height: 100%;
-    object-fit: contain;   /* keep whole head visible */
-    z-index: 0;
+    object-fit: contain;
+    z-index: 1;
   }
 
-  /* Cap size only on very large screens */
-  @media (min-width: 1200px) {
-    .tv > video {
-      --video-offset-y: 52%; /* adjust here */
-      max-width: 700px;
-      max-height: 80vh;
-      left: 50%;
-      top: var(--video-offset-y);
-      transform: translate(-50%, -50%);
-      position: absolute;
-    }
-  }
 
-  /* TV frame overlay (PNG with transparent screen cut-out) */
+
+  /* === TV frame === */
   .tv-frame {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     pointer-events: none;
-    z-index: 2;
+    z-index: 3;
   }
 
-  /* Optional subtle scanlines */
+
+
+  /* === Scanlines === */
   .scanlines {
-    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    z-index: 2;
+    pointer-events: none;
     background:
       repeating-linear-gradient(
         to bottom,
         rgba(0,0,0,.18) 0px,
         rgba(0,0,0,.18) 1px,
-        transparent      2px,
-        transparent      3px
+        transparent 2px,
+        transparent 3px
       );
     mix-blend-mode: soft-light;
     opacity: .45;
   }
 
-  /* === HUD: title + links overlayed on top of TV === */
-  .title {
-    position: absolute; left: 50%; top: calc(env(safe-area-inset-top) + 12px);
-    transform: translateX(-50%);
-    font-size: clamp(1.5rem, 3.5vw, 3rem);
-    font-weight: 700;
-    text-shadow: 0 2px 18px rgba(0,0,0,.65);
-    z-index: 3;
-  }
-
-  .hud {
-    position: absolute;
-    left: 0; right: 0;
-    bottom: calc(env(safe-area-inset-bottom) + var(--hud-pad));
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--hud-gap);
-    padding: 0 clamp(12px, 4vw, 28px);
-    max-width: 820px;
-    margin: 0 auto;
-    z-index: 3;
-  }
-
-  .hud a {
-    display: inline-flex; align-items: center; justify-content: center;
-    padding: clamp(8px, 1.5vw, 16px) clamp(12px, 2vw, 20px);
-    font-size: clamp(14px, 2vw, var(--btn-fz));
-    font-weight: 600;
-    color: #eee; text-decoration: none;
-    border-radius: 16px;
-    background: rgba(20,20,20,0.65);
-    border: 1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(6px);
-    box-shadow:
-        0 0 12px rgba(0, 150, 255, 0.6),
-        0 8px 24px rgba(0,0,0,.45);
-    transition: transform .12s ease, background .15s ease, box-shadow .2s ease;
-  }
-
-  .hud a:hover {
-    transform: scale(1.05);
-    background: rgba(40,40,40,0.7);
-    box-shadow:
-        0 0 18px rgba(0, 180, 255, 0.9),
-        0 8px 28px rgba(0,0,0,.55);
-  }
-
-  /* Wider screens: show buttons in one row centered */
-  @media (min-width: 900px) {
-    .hud {
-      grid-template-columns: repeat(4, max-content);
-      justify-content: center;
-      gap: 18px;
-    }
-  }
-/* ===== Mobile-specific behavior =====
-      On mobile, the frame scales by WIDTH; place the HUD directly under
-      the screen cutout by anchoring it to --screen-bottom-mobile. */
-@media (max-width: 899px) {
-  .tv-frame {
-    width: 100%;
-    height: auto;
-    top: 0;
-    bottom: auto;
-  }
-
-  .tv > video {
-    width: 100%;
-    height: auto;
-    left: 50%;
-    top: 0;
-    transform: translateX(-50%);
-    object-fit: contain;
-  }
-
-  /* Buttons directly under the screen, not inside it */
-  .hud {
-    position: absolute; /* Already in your code, but good to double-check */
-    top: var(--screen-bottom-mobile);
-    bottom: auto; /* Resets the bottom property */
-  }
+  /* === Hotspots Container === */
+.hotspots {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  /* This lets you "reach through" the empty space to scroll the iframe */
+  pointer-events: none; 
 }
 
-  /* Tiny footer (overlaid, unobtrusive) */
-  footer {
-    position: absolute; left: 50%; bottom: 6px; transform: translateX(-50%);
-    font-size: .85rem; color: rgba(255,255,255,0.45); text-align: center;
-    z-index: 3; pointer-events: none;
-    text-shadow: 0 1px 12px rgba(0,0,0,.7);
+/* === Individual Buttons === */
+.hotspots .btn {
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  /* This ensures the buttons themselves still respond to clicks */
+  pointer-events: auto; 
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+  /* ---- Desktop hotspot mapping ---- */
+  .btn.home {
+    left: 21%;
+    bottom: 8.5%;
+    width: 11.5%;
+    height: 5%;
   }
+
+  .btn.socials {
+    left: 34%;
+    bottom: 8.5%;
+    width: 9%;
+    height: 5%;
+  }
+
+  .btn.resume {
+    left: 44.5%;
+    bottom: 8.5%;
+    width: 10%;
+    height: 5%;
+  }
+
+  .btn.portfolio {
+    left: 56%;
+    bottom: 8.5%;
+    width: 8.5%;
+    height: 5%;
+  }
+
+  .btn.send {
+    left: 81%;
+    bottom: 8.5%;
+    width: 6.5%;
+    height: 5%;
+  }
+
+  .hotspots button.btn {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+
+  .power-btn {
+    position: absolute;
+    z-index: 5;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+
+    /* Refined placement */
+    left: 14%;
+    top: 11.5%;
+    width: 5%;
+
+    /* Slight downscale so it fits the recess */
+    transform: scale(0.6);
+    transform-origin: top left;
+
+    /* Subtle depth so it feels embedded */
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6));
+  }
+
+  .tv-off video {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .tv-off .scanlines {
+    opacity: 0;
+  }
+
+  /* === TV screen iframe (hidden by default) === */
+  .screen-frame {
+    position: absolute;
+
+    /* 🔧 CRT screen opening */
+    left: 30%;
+    top: 15%;
+    width: 40%;
+    height: 60%;
+
+    z-index: 2;          /* above video, below frame */
+    border: none;
+    background: black;
+
+    opacity: 0;
+    pointer-events: none;
+    overflow: auto;
+
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tv-show-screen .screen-frame {
+    opacity: 1;
+    pointer-events: auto; /* ✅ enables scroll + clicks */
+  }
+
+
+  .tv-show-screen video {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* === Screen glass / dirt / shine === */
+.screen-glass {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+
+  background:
+    /* Big greasy fingerprints */
+    radial-gradient(
+      circle at 32% 28%,
+      rgba(255,255,255,0.18),
+      rgba(255,255,255,0.06) 35%,
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 68% 58%,
+      rgba(255,255,255,0.14),
+      rgba(255,255,255,0.04) 40%,
+      transparent 60%
+    ),
+
+    /* Dark grime patches */
+    radial-gradient(
+      circle at 50% 75%,
+      rgba(0,0,0,0.25),
+      transparent 55%
+    ),
+
+    /* Wipe streaks */
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.06) 0px,
+      rgba(255,255,255,0.06) 1px,
+      transparent 4px,
+      transparent 10px
+    );
+
+  mix-blend-mode: overlay;
+  opacity: 0.65;
+  filter: blur(0.4px) contrast(1.15);
+}
+
+
+.tv-scale > video {
+  z-index: 1;
+}
+
+.screen-frame {
+  z-index: 2;
+}
+
+.scanlines {
+  z-index: 4;
+}
+
+.screen-glass {
+  z-index: 5;
+}
+
 </style>
 </head>
+
 <body>
 
-  <!-- Fullscreen TV -->
-  <div class="tv" id="stage">
-    <!-- Video underlay -->
-    <video id="vid" preload="metadata" playsinline webkit-playsinline muted poster="static_jj.jpeg">
+<div class="tv" id="stage">
+
+  <div class="tv-scale">
+
+    <img
+      id="powerBtn"
+      class="power-btn"
+      src="power_button_on.png"
+      alt="Power button"
+      aria-label="Power"
+    />
+
+    <video id="vid"
+      preload="metadata"
+      playsinline
+      webkit-playsinline
+      muted
+      poster="static_jj.jpeg">
       <source src="headturn_scrub.webm" type="video/webm">
-      <source src="headturn_scrub.mp4"  type="video/mp4">
-      Sorry, your browser doesn’t support embedded video.
+      <source src="headturn_scrub.mp4" type="video/mp4">
     </video>
 
-    <!-- Optional CRT flair -->
-    <div class="scanlines" aria-hidden="true"></div>
+    <iframe
+      id="screenFrame"
+      class="screen-frame"
+      title="TV Screen"
+    ></iframe>
 
-    <!-- TV frame overlay -->
+    <div class="crt-power"></div>
+    <div class="screen-glass"></div>
+    <div class="scanlines"></div>
+
     <picture>
       <source srcset="noscreen_img_mobile.png" media="(max-width: 899px)">
       <img class="tv-frame" src="noscreen_img.png" alt="" aria-hidden="true">
     </picture>
 
-    <!-- HUD: title + links -->
-    <nav class="hud">
-      <a href="socials.html">Socials</a>
-      <a href="resume.html">Resume</a>
-      <a href="about.html">About</a>
-      <a href="portfolio.html">Portfolio</a>
-    </nav>
+    <div class="hotspots">
+      <a class="btn home" href="index.html" aria-label="Home"></a>
+      <a class="btn socials" href="socials.html" aria-label="Socials"></a>
+      <a class="btn resume" href="resume.html" aria-label="Resume"></a>
+      <a class="btn portfolio" href="portfolio.html" aria-label="Portfolio"></a>
+
+      <!-- SEND button (no navigation) -->
+      <button class="btn send" id="sendBtn" aria-label="Send"></button>
+    </div>
 
   </div>
+</div>
 
 <script>
-/* === CCW timestamp-driven scrub (same logic; uses the TV as the center) === */
+/* === CCW timestamp-driven scrub (unchanged logic) === */
 (function(){
   const vid   = document.getElementById('vid');
   const stage = document.getElementById('stage');
@@ -211,29 +333,33 @@
   const TIMES_12_INPUT = ["00.0","27.0","25.0","22.0","20.0","19.0","16.0","11.0","10.0","06.0","03.0","02.0"];
   const DUR_FALLBACK   = 30;
   const LABELS_INPUT   = [12,1,2,3,4,5,6,7,8,9,10,11];
-  const map = {}; TIMES_12_INPUT.forEach((t,i)=> map[LABELS_INPUT[i]] = parseTS(t));
+  const map = {};
+  TIMES_12_INPUT.forEach((t,i)=> map[LABELS_INPUT[i]] = parseTS(t));
   const ORDER = [12,11,10,9,8,7,6,5,4,3,2,1];
   const times = ORDER.map(l => map[l]);
 
   let duration = DUR_FALLBACK;
   vid.addEventListener('loadedmetadata', ()=>{
     duration = vid.duration || DUR_FALLBACK;
-    try { vid.currentTime = 0.001; } catch(_){} // nudge iOS to paint a frame
+    try { vid.currentTime = 0.001; } catch(_){}
     vid.pause();
   }, { once:true });
 
   function parseTS(x){
     if (typeof x === 'number') return x;
-    if (typeof x !== 'string') return NaN;
-    if (x.includes(':')) { const [m,s]=x.split(':'); return (+m||0)*60 + (parseFloat(s)||0); }
+    if (x.includes(':')) {
+      const [m,s] = x.split(':');
+      return (+m||0)*60 + (parseFloat(s)||0);
+    }
     return parseFloat(x);
   }
 
-  // Angle from the center of the screen (CCW, 0°=right, 90°=up)
   function angleCCWFromCenter(e){
     const r  = stage.getBoundingClientRect();
-    const cx = r.left + r.width/2, cy = r.top + r.height/2;
-    const dx = e.clientX - cx,     dy = e.clientY - cy;
+    const cx = r.left + r.width/2;
+    const cy = r.top + r.height/2;
+    const dx = e.clientX - cx;
+    const dy = e.clientY - cy;
     let deg  = Math.atan2(-dy, dx) * 180/Math.PI;
     if (deg < 0) deg += 360;
     return deg;
@@ -241,33 +367,101 @@
 
   function timeFromAngleCCW(deg){
     const shifted = (deg - 90 + 360) % 360;
-    const seg     = Math.floor(shifted / 30);
-    const f       = (shifted % 30) / 30;
-    let t0 = times[seg], t1 = times[(seg + 1) % 12];
+    const seg = Math.floor(shifted / 30);
+    const f   = (shifted % 30) / 30;
+    let t0 = times[seg];
+    let t1 = times[(seg + 1) % 12];
     if (t1 <= t0) t1 += duration;
     return (t0 + f * (t1 - t0)) % duration;
   }
 
   let raf=false, next=0;
-  function onPointerMove(e){
-    const deg = angleCCWFromCenter(e);
-    next = timeFromAngleCCW(deg);
-    if (!raf){
-      raf = true;
-      requestAnimationFrame(()=>{
-        if (Math.abs(vid.currentTime - next) > 0.0005)
-          vid.currentTime = next;
-        raf = false;
-      });
-    }
+  function onPointerMove(e) {
+  const tv = document.querySelector('.tv');
+
+  // Do nothing if TV is showing screen content or powered off
+  if (
+    tv.classList.contains('tv-show-screen') ||
+    tv.classList.contains('tv-off')
+  ) {
+    return;
   }
 
+  const deg = angleCCWFromCenter(e);
+  next = timeFromAngleCCW(deg);
+
+  if (!raf) {
+    raf = true;
+    requestAnimationFrame(() => {
+      if (Math.abs(vid.currentTime - next) > 0.0005) {
+        vid.currentTime = next;
+      }
+      raf = false;
+    });
+  }
+}
+
+
   window.addEventListener('mousemove', onPointerMove, { passive:true });
-  window.addEventListener('touchmove', (e)=>{
-    const t0 = e.touches[0]; if (!t0) return;
-    onPointerMove({ clientX: t0.clientX, clientY: t0.clientY });
+  window.addEventListener('touchmove', e=>{
+    if (e.touches[0])
+      onPointerMove(e.touches[0]);
   }, { passive:true });
 })();
+
+(() => {
+  const powerBtn = document.getElementById('powerBtn');
+  const tvRoot   = document.querySelector('.tv');
+  const video    = document.getElementById('vid');
+
+  let isOn = true;
+
+  powerBtn.addEventListener('click', () => {
+    isOn = !isOn;
+
+    powerBtn.src = isOn
+      ? 'power_button_on.png'
+      : 'power_button_off.png';
+
+    tvRoot.classList.toggle('tv-off', !isOn);
+
+    if (!isOn) {
+    video.pause();
+    document.querySelector('.tv').classList.remove('tv-show-screen');
+  } else {
+    video.currentTime = video.currentTime || 0.001;
+  }
+  });
+})();
+
+(() => {
+  const tv = document.querySelector('.tv');
+  const iframe = document.getElementById('screenFrame');
+
+  function showScreen(url) {
+    iframe.src = url;
+    tv.classList.add('tv-show-screen');
+  }
+
+  function goHome() {
+    iframe.src = '';
+    tv.classList.remove('tv-show-screen');
+  }
+
+  // Intercept navigation buttons
+  document.querySelectorAll('.hotspots a').forEach(link => {
+    link.addEventListener('click', e => {
+      const href = link.getAttribute('href');
+      if (!href || href === 'index.html') {
+        goHome();
+      } else {
+        e.preventDefault();
+        showScreen(href);
+      }
+    });
+  });
+})();
 </script>
+
 </body>
 </html>
