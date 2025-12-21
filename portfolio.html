@@ -39,12 +39,6 @@ h1 {
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
 
-/* Hide radios */
-.proj-toggle {
-  position: absolute;
-  left: -10000px;
-}
-
 /* Card */
 .card {
   background: #111;
@@ -52,11 +46,9 @@ h1 {
   box-shadow: 0 12px 40px rgba(0,0,0,.5);
   padding: 16px;
   border: 1px solid #222;
-  cursor: pointer;
 }
 
-.card:hover,
-.card:focus-within {
+.card:hover {
   border-color: #2b2b2b;
 }
 
@@ -68,32 +60,11 @@ h1 {
   margin: 0 auto 8px;
 }
 
-/* Accordion container */
+/* Details (always visible) */
 .details {
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-  transition:
-    grid-template-rows .35s ease,
-    opacity .25s ease,
-    margin-top .25s ease;
-}
-
-/* Inner wrapper */
-.details-inner {
-  overflow: hidden;
-}
-
-/* Expanded state */
-#proj-horseman:checked + label .details,
-#proj-muskifier:checked + label .details,
-#proj-flickpick:checked + label .details {
-  grid-template-rows: 1fr;
-  opacity: 1;
   margin-top: 16px;
 }
 
-/* Details content */
 .details-inner img {
   max-width: 100%;
   border-radius: 12px;
@@ -144,38 +115,40 @@ h1 {
 
 <section class="grid">
 
-  <!-- HORSEMAN -->
-  <input class="proj-toggle" type="radio" name="proj" id="proj-horseman" checked>
-  <label class="card project" for="proj-horseman">
-    <img src="facthole.png" alt="FACTHOLE">
+  <!-- FACTHOLE -->
+  <div class="card project">
     <strong>FACTHOLE</strong><br>
     A log of some of Donald Trumps lies
 
     <div class="details">
       <div class="details-inner">
-        <img src="facthole.png" alt="facthole preview">
+        <img src="facthole.png" alt="FACTHOLE preview">
         <h2>FACTHOLE</h2>
         <p>
           This project is an experiment in exploring fun ways of utilizing AI and automation.
-          On this website I'm running an automated daily script that scrapes Donald Trump's 
-          Truth Social feed and runs it through a small AI agent that is capable of searching the web. 
-          The agent then decides, sometimes with doubtful reasoning, if Mr Trump has made any false claims 
-          before storing the results accordingly in a Supabase database.<br><br>
-
-          The whole workflow is automated and the script runs once every day, 
-          all I have to do is sit back and watch the judgement roll in.
+          On this website I'm running an automated daily script that scrapes Donald Trump's
+          Truth Social feed and runs it through a small AI agent capable of searching the web.
+          <br><br>
+          The agent evaluates whether a claim appears false and stores the result in a
+          Supabase database. The entire workflow runs automatically once per day.
+          <br><br>
+          The frontend was built using <a href="https://lovable.dev" target="_blank">Lovable</a>.<br>
+          The agent is based on an OpenAI gpt-5-mini model that has access to a free websearching api 
+          for making simple websearch queries and access to the headlines and summaries of the results. 
+          It's not great, and has a habit of missing certain critical facts due
+          to not making a perfect websearch combined with not having up-to-date inherent knowledge. I still
+          think it's a fun concept and I will probably spend some time refining the logic of the agent at 
+          some point in the future. 
         </p>
         <div class="links">
           <a class="btn" href="https://facthole.netlify.app/" target="_blank">View site</a>
         </div>
       </div>
     </div>
-  </label>
+  </div>
 
-  <!-- MUSKIFIER -->
-  <input class="proj-toggle" type="radio" name="proj" id="proj-muskifier">
-  <label class="card project" for="proj-muskifier">
-    <img src="muskifier.png" alt="De-Muskifier">
+  <!-- DE-MUSKIFIER -->
+  <div class="card project">
     <strong>De-Muskifier</strong><br>
     The browser addon that makes you forget about Elon Musk
 
@@ -184,10 +157,14 @@ h1 {
         <img src="muskifier.png" alt="De-Muskifier preview">
         <h2>De-Muskifier</h2>
         <p>
-          A Firefox extension that replaces mentions of Elon Musk, Tesla and SpaceX
-          with raccoons and raccoon facts. It works by scanning the active page for
-          keywords and swapping the content in place. Sometimes it works a little
-          too well, but the goal is joy, not perfection.
+          A Firefox extension that replaces mentions of Elon Musk, Tesla, and SpaceX
+          with raccoons and raccoon facts. It scans the active page for keywords and
+          swaps content in place.
+          <br><br>
+          Sometimes it works a little too well. For instance, when visiting the page <a href="https://www.elon.se/" target="_blank">Elon</a>
+          it kind of goes crazy and replaces all occurences of the brand name Elon, which is everywhere, but the goal is joy, not perfection!
+          <br><br>
+          This small addon had very positive feedback on Reddit's <a href="https://www.reddit.com/r/SideProject/comments/1i3dj6x/demuskifier_the_extension_that_removes_elon_musk/" target="_blank">SideProject subreddit</a>.
         </p>
         <div class="links">
           <a class="btn" href="https://addons.mozilla.org/en-US/firefox/addon/de-muskifier/" target="_blank">Firefox Addon</a>
@@ -196,29 +173,39 @@ h1 {
         </div>
       </div>
     </div>
-  </label>
+  </div>
 
   <!-- FLICKPICK -->
-  <input class="proj-toggle" type="radio" name="proj" id="proj-flickpick">
-  <label class="card project" for="proj-flickpick">
-    <img src="fp_home.png" alt="FlickPick">
+  <div class="card project">
     <strong>FlickPick</strong><br>
     Keyword-based movie finder using machine learning
 
     <div class="details">
       <div class="details-inner">
+        <img src="fp_home.png" alt="FlickPick home">
         <h2>FlickPick</h2>
         <p>
           FlickPick converts user text input into vectors using TF-IDF, compares them
-          against movie plot vectors and finds the closest matches using a nearest
-          neighbors algorithm. Created as a group assignment, I was responsible for
-          frontend development and the machine learning logic.
+          against movie plot vectors, and finds the closest matches using a nearest
+          neighbors algorithm.
+          <br><br>
+          Created as a group assignment, I was responsible for frontend development
+          and the machine learning logic.
         </p>
-        <img src="fp_home.png" alt="FlickPick home">
         <img src="fp_result.png" alt="FlickPick results">
+        Movie keywords from a large TMDB dataset are converted into numerical vectors using TF-IDF, 
+        allowing both movies and user input to exist in the same semantic space. 
+        When a user describes what they want to watch, their text is processed and compared against 
+        all movies using cosine similarity and a k-Nearest Neighbors search. <br><br>
+        
+        Instead of predicting genres or ratings, the system simply finds the movies whose keywords 
+        are closest to the users description, returning one top match and two similar alternatives. 
+        Optional genre filtering narrows the search without restricting natural language input.<br><br>
+        The result is a fast, explainable recommendation system that focuses on similarity rather than prediction.
+        <img src="moviefinder.png" alt="FlickPick logic">
       </div>
     </div>
-  </label>
+  </div>
 
 </section>
 

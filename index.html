@@ -312,7 +312,7 @@
     </picture>
 
     <div class="hotspots">
-      <a class="btn home" href="index.html" aria-label="Home"></a>
+      <a class="btn home" href="#" aria-label="Home"></a>
       <a class="btn socials" href="socials.html" aria-label="Socials"></a>
       <a class="btn resume" href="resume.html" aria-label="Resume"></a>
       <a class="btn portfolio" href="portfolio.html" aria-label="Portfolio"></a>
@@ -452,12 +452,19 @@
   document.querySelectorAll('.hotspots a').forEach(link => {
     link.addEventListener('click', e => {
       const href = link.getAttribute('href');
-      if (!href || href === 'index.html') {
-        goHome();
-      } else {
+
+      // Home button
+      if (href === '#' || href === '' || !href) {
         e.preventDefault();
-        showScreen(href);
+        iframe.src = '';
+        tv.classList.remove('tv-show-screen');
+        return;
       }
+
+      // Other buttons
+      e.preventDefault();
+      iframe.src = href;
+      tv.classList.add('tv-show-screen');
     });
   });
 })();
