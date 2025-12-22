@@ -269,6 +269,76 @@
   z-index: 5;
 }
 
+#chatInput {
+  position: absolute;
+
+  /* Match the black text box area */
+  left: 67%;
+  bottom: 8.5%;
+  width: 13%;
+  height: 5.5%;
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  color: #d9d9d9d8;
+  font-family: monospace;
+  font-size: 20px;
+  line-height: 1;
+
+  z-index: 6;
+
+  caret-color: #d9d9d9d8;
+
+  /* Prevent mobile zoom issues */
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Optional: subtle CRT glow */
+#chatInput {
+  text-shadow: 0 0 6px rgba(0, 255, 100, 0.4);
+}
+
+#subtitles {
+  position: absolute;
+
+  /* Clearly inside the CRT screen */
+  left: 30%;
+  bottom: 26%;      /* ⬆ higher than before */
+  width: 40%;
+
+  text-align: center;
+
+  /* Real subtitle look */
+  color: #d9d9d9d8;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 10px 16px;
+  border-radius: 4px;
+
+  font-family: system-ui, Arial, sans-serif;
+  font-size: 26px;  /* ⬆ bigger text */
+  line-height: 1.35;
+  font-weight: 500;
+
+  /* Subtle CRT softness */
+  text-shadow:
+  0 1px 2px rgba(0, 0, 0, 0.45),
+  0 0 6px rgba(0, 0, 0, 0.25);
+
+  z-index: 4; /* above video, below glass */
+  pointer-events: none;
+
+  opacity: 0;
+  transition: opacity 0.2s ease;
+
+  max-width: 36ch;
+  margin: 0 auto;
+}
+
+
+
+
 </style>
 </head>
 
@@ -304,6 +374,7 @@
 
     <div class="crt-power"></div>
     <div class="screen-glass"></div>
+    <div id="subtitles"></div>
     <div class="scanlines"></div>
 
     <picture>
@@ -321,11 +392,24 @@
       <button class="btn send" id="sendBtn" aria-label="Send"></button>
     </div>
 
+    <input
+      id="chatInput"
+      type="text"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="Add subtitles.."
+      aria-label="Chat input"
+    />
+
+    
+
   </div>
 </div>
 
 <script>
-/* === CCW timestamp-driven scrub (unchanged logic) === */
+/* =========================================================
+   1. CCW timestamp-driven scrub (UNCHANGED)
+   ========================================================= */
 (function(){
   const vid   = document.getElementById('vid');
   const stage = document.getElementById('stage');
@@ -377,38 +461,39 @@
 
   let raf=false, next=0;
   function onPointerMove(e) {
-  const tv = document.querySelector('.tv');
+    const tv = document.querySelector('.tv');
 
-  // Do nothing if TV is showing screen content or powered off
-  if (
-    tv.classList.contains('tv-show-screen') ||
-    tv.classList.contains('tv-off')
-  ) {
-    return;
+    if (
+      tv.classList.contains('tv-show-screen') ||
+      tv.classList.contains('tv-off')
+    ) {
+      return;
+    }
+
+    const deg = angleCCWFromCenter(e);
+    next = timeFromAngleCCW(deg);
+
+    if (!raf) {
+      raf = true;
+      requestAnimationFrame(() => {
+        if (Math.abs(vid.currentTime - next) > 0.0005) {
+          vid.currentTime = next;
+        }
+        raf = false;
+      });
+    }
   }
-
-  const deg = angleCCWFromCenter(e);
-  next = timeFromAngleCCW(deg);
-
-  if (!raf) {
-    raf = true;
-    requestAnimationFrame(() => {
-      if (Math.abs(vid.currentTime - next) > 0.0005) {
-        vid.currentTime = next;
-      }
-      raf = false;
-    });
-  }
-}
-
 
   window.addEventListener('mousemove', onPointerMove, { passive:true });
   window.addEventListener('touchmove', e=>{
-    if (e.touches[0])
-      onPointerMove(e.touches[0]);
+    if (e.touches[0]) onPointerMove(e.touches[0]);
   }, { passive:true });
 })();
 
+
+/* =========================================================
+   2. Power button logic
+   ========================================================= */
 (() => {
   const powerBtn = document.getElementById('powerBtn');
   const tvRoot   = document.querySelector('.tv');
@@ -426,49 +511,136 @@
     tvRoot.classList.toggle('tv-off', !isOn);
 
     if (!isOn) {
-    video.pause();
-    document.querySelector('.tv').classList.remove('tv-show-screen');
-  } else {
-    video.currentTime = video.currentTime || 0.001;
-  }
+      video.pause();
+      tvRoot.classList.remove('tv-show-screen');
+    } else {
+      video.currentTime = video.currentTime || 0.001;
+    }
   });
 })();
 
+
+/* =========================================================
+   3. Navigation / iframe logic
+   ========================================================= */
 (() => {
   const tv = document.querySelector('.tv');
   const iframe = document.getElementById('screenFrame');
 
-  function showScreen(url) {
-    iframe.src = url;
-    tv.classList.add('tv-show-screen');
-  }
-
-  function goHome() {
-    iframe.src = '';
-    tv.classList.remove('tv-show-screen');
-  }
-
-  // Intercept navigation buttons
   document.querySelectorAll('.hotspots a').forEach(link => {
     link.addEventListener('click', e => {
       const href = link.getAttribute('href');
 
-      // Home button
-      if (href === '#' || href === '' || !href) {
+      if (!href || href === '#') {
         e.preventDefault();
         iframe.src = '';
         tv.classList.remove('tv-show-screen');
         return;
       }
 
-      // Other buttons
       e.preventDefault();
       iframe.src = href;
       tv.classList.add('tv-show-screen');
     });
   });
 })();
+
+
+/* =========================================================
+   4. Chat input + SEND button logic
+   ========================================================= */
+
+const subtitles = document.getElementById("subtitles");
+
+// Grab elements FIRST
+const chatInput = document.getElementById("chatInput");
+const sendBtn   = document.getElementById("sendBtn");
+const tv        = document.querySelector(".tv");
+
+// ---- Chat submit ----
+function submitChat() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+
+  chatInput.value = "";
+
+  // Show subtitles
+  subtitles.textContent = text;
+  subtitles.style.opacity = "1";
+
+  // Optional: auto-fade after a few seconds
+  clearTimeout(subtitles._hideTimer);
+  subtitles._hideTimer = setTimeout(() => {
+    subtitles.style.opacity = "0";
+  }, 4000);
+}
+
+// Events
+sendBtn.addEventListener("click", submitChat);
+
+chatInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    submitChat();
+  }
+});
+
+// ---- Enable / disable input based on TV state ----
+function updateChatInputState() {
+  const tvOn   = !tv.classList.contains("tv-off");
+  const onHome = !tv.classList.contains("tv-show-screen");
+
+  chatInput.disabled = !(tvOn && onHome);
+  chatInput.style.opacity = chatInput.disabled ? "0" : "1";
+}
+
+// Watch TV state changes
+new MutationObserver(updateChatInputState)
+  .observe(tv, { attributes: true });
+
+updateChatInputState();
+
+
+/* =========================================================
+   5. n8n webhook call
+   ========================================================= */
+const CHAT_ENDPOINT = "https://YOUR_N8N_DOMAIN/webhook/jj-chat-9f3a2c7e8b1d";
+const CHAT_TOKEN    = "jj_site_v1";
+
+let chatHistory = [];
+
+async function sendChatMessage(message) {
+  try {
+    const res = await fetch(CHAT_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-chat-auth": CHAT_TOKEN
+      },
+      body: JSON.stringify({
+        message,
+        section: "home",
+        history: chatHistory.slice(-10)
+      })
+    });
+
+    if (!res.ok) {
+      console.error("Chat request failed", res.status);
+      return;
+    }
+
+    const data = await res.json();
+
+    chatHistory.push({ role: "user", content: message });
+    chatHistory.push({ role: "assistant", content: data.reply });
+    chatHistory = chatHistory.slice(-10);
+
+    console.log("Bot:", data.reply); // placeholder for rendering later
+  } catch (err) {
+    console.error("Chat error:", err);
+  }
+}
 </script>
+
 
 </body>
 </html>
